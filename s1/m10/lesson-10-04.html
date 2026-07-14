@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 10.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 10</div>
+        <div style="font-size: 12px; color: #666;">Third Conjugation Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 10.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Reading &mdash; Cicero vs. Catiline</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Art of Roman Rhetoric</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 10.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Reading Latin &mdash; The Night Cicero Stood Up</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Pattern plus verbs equals reading. Today the pieces click together &mdash; on one of history's most famous speeches.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">First you read real Latin sentences using this week's third-conjugation verbs. Then you step into the year <strong>63 BCE</strong>, when a conspirator named <strong>Catiline</strong> plotted to seize Rome by force &mdash; and the consul <strong>Cicero</strong> rose in the Senate to stop him with nothing but words. It is the perfect story for our quarter's theme: rhetoric as action, speech as a weapon. No new grammar today: today you <em>use</em> what you built.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read and translate short Latin sentences that use third conjugation verbs.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> retell the Catilinarian Conspiracy and explain why Cicero's speech is remembered as a triumph of rhetoric.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; READ ALONG <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Sentences you can now read</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read each aloud. Find the subject (nominative), then the verb, and check that they agree in number. The gray line is your parse and translation &mdash; try it yourself before you read it.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Before you read: our theme is <em>rhetoric</em> &mdash; the art of persuasion. What do you think a Roman valued most in a great speaker?</div>
+            <div class="widget-options">
+                <button data-response="A strong instinct. Romans prized the power to move a crowd — but they paired it with truth and courage. Watch how Cicero, in today's story, wins not by shouting but by laying the facts bare at exactly the right moment.">The power to sway a crowd</button>
+                <button data-response="Yes — Romans admired an orator who spoke truthfully and bravely, not just beautifully. That is exactly Cicero's reputation: he used evidence and nerve, and today you'll see how.">Speaking the truth with courage</button>
+                <button data-response="A fair guess — good timing mattered enormously. Cicero's genius was partly knowing the decisive moment to rise and speak. Keep that in mind as you read what he did in the Senate.">Knowing the right moment to speak</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="sentence"><span class="s-lat">Cicerō dīcit; Catilīna timet.</span><p class="parse">Cicero speaks; Catiline is afraid. &mdash; <span class="lat">dīcit</span> 3rd sg. (3rd conj.) &middot; <span class="lat">timet</span> 3rd sg. (2nd conj., from Module 9). Two families in one line.</p></div>
+        <div class="sentence"><span class="s-lat">Cicerō Catilīnam nōn amat.</span><p class="parse">Cicero does not love Catiline. &mdash; <span class="lat">Cicerō</span> nom. sg. (subject) &middot; <span class="lat">Catilīnam</span> acc. sg. (object; <span class="lat">Catilīna</span> is a 1st-decl. name) &middot; <span class="lat">amat</span> 3rd sg.</p></div>
+        <div class="sentence"><span class="s-lat">Cicerō verba scrībit.</span><p class="parse">Cicero writes words. &mdash; <span class="lat">verba</span> acc. pl. (&ldquo;words&rdquo;) &middot; <span class="lat">scrībit</span> 3rd sg. of <span class="lat">scrībere</span>.</p></div>
+        <div class="sentence"><span class="s-lat">Cicerō Catilīnam ex oppidō agit.</span><p class="parse">Cicero drives Catiline out of the town. &mdash; <span class="lat">agit</span> here = &ldquo;drives&rdquo; &middot; <span class="lat">ex oppidō</span> abl. (&ldquo;out of the town,&rdquo; from Module 8).</p></div>
+        <div class="sentence"><span class="s-lat">Rōmānī Catilīnam vincunt.</span><p class="parse">The Romans conquer Catiline. &mdash; <span class="lat">Rōmānī</span> nom. pl. (&ldquo;the Romans&rdquo;) &middot; <span class="lat">vincunt</span> 3rd pl. of <span class="lat">vincere</span> &mdash; note the <span class="lat">-unt</span> vowel.</p></div>
+        <div style="background:#F4F9FC;border:1px solid #D0D9E8;border-left:4px solid #2196D0;border-radius:6px;padding:12px 16px;margin:12px 0 0;">
+            <div style="font-size:11px;color:#1B6A94;letter-spacing:.3px;margin-bottom:6px;">&#128161; NOTICE &middot; MIXED CONJUGATIONS</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Real Latin mixes verb families in a single sentence. In the first line, <span class="lat">dīcit</span> (3rd conj.) sits right beside <span class="lat">timet</span> (2nd conj.). Both are third person singular &mdash; the <em>ending</em> tells you that, no matter which family the verb comes from. That's the payoff of learning the endings so well.</p>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; CULTURAL READING <span class="pill-time">14 min</span></div>
+        <div class="culture-box">
+            <div class="lbl">&#127963;&#65039; THE CATILINARIAN CONSPIRACY &middot; ROME, 63 BCE</div>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">Lucius Sergius <strong>Catiline</strong> (<span class="lat">Catilīna</span>) was a ruined aristocrat, deep in debt and hungry for power. Twice defeated in elections for consul, he gathered other desperate men and hatched a plot: to murder the leading men of Rome, burn parts of the city, and seize the Republic by force.</p>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">The consul that year was <strong>Cicero</strong> &mdash; not born to a great family, but the finest speaker Rome ever produced. Through informants he learned every detail of the plot. On the 8th of November, with Catiline himself seated in the Senate, Cicero rose and delivered the speech we call the <strong>First Catilinarian</strong>. He named the conspiracy aloud, laid the evidence bare, and told Catiline to his face that Rome already knew everything.</p>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">No sword was drawn. Cicero <em>drove Catiline out of the city with words</em>. Humiliated and exposed, Catiline fled that very night to join his army in the countryside. Within weeks the rebellion was crushed and Catiline was killed in battle. Cicero was hailed as <span class="lat">pater patriae</span> &mdash; &ldquo;father of the fatherland.&rdquo; It was the moment that proved a Roman could conquer with speech alone.</p>
+        </div>
+        <div class="virtue-box">
+            <div class="lbl">&#128172; THE MOST FAMOUS OPENING IN LATIN</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 8px;">Cicero began with a line every Latin student eventually meets:</p>
+            <p style="font-size:18px;color:#0e1c42;font-style:italic;line-height:1.6;margin:0 0 8px;">&ldquo;Quō usque tandem abūtēre, Catilīna, patientiā nostrā?&rdquo;</p>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">&mdash; &ldquo;How long, Catiline, will you keep abusing our patience?&rdquo; The grammar is beyond us for now (we'll admire it, not parse it), but hear the nerve of it: the consul opens not with a greeting but with an accusation, hurled at the guilty man sitting right in front of him. A few lines later comes another phrase still quoted today: <span class="lat">Ō tempora! Ō mōrēs!</span> &mdash; &ldquo;Oh, the times! Oh, the customs!&rdquo;</p>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 3 &middot; CHECK YOUR READING <span class="pill-time">14 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five checks &mdash; some test the story, some test your Latin reading. Take them slowly; the point is to prove you can both read the sentences and follow the history.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; comprehension</div>
+            <div class="widget-question">When Cicero learned of the plot, what did he do?</div>
+            <div class="widget-options">
+                <button data-correct="false">He fled Rome in secret</button>
+                <button data-correct="true">He exposed the conspiracy in a speech to the Senate</button>
+                <button data-correct="false">He joined Catiline's cause</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; translate</div>
+            <div class="widget-question">Translate: <span class="lat">Cicerō Catilīnam ex oppidō agit.</span></div>
+            <div class="widget-options">
+                <button data-correct="true">Cicero drives Catiline out of the town</button>
+                <button data-correct="false">Catiline drives Cicero out of the town</button>
+                <button data-correct="false">The town drives out Cicero and Catiline</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; who's who</div>
+            <div class="widget-question">Who was Catiline?</div>
+            <div class="widget-options">
+                <button data-correct="false">the consul defending Rome</button>
+                <button data-correct="true">a ruined aristocrat who plotted to seize power</button>
+                <button data-correct="false">a foreign king invading Italy</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; translate</div>
+            <div class="widget-question">Translate: <span class="lat">Cicerō verba scrībit.</span></div>
+            <div class="widget-options">
+                <button data-correct="false">The words write Cicero</button>
+                <button data-correct="false">Cicero speaks the words</button>
+                <button data-correct="true">Cicero writes words</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the famous line</div>
+            <div class="widget-question"><span class="lat">Quō usque tandem abūtēre, Catilīna, patientiā nostrā?</span> best captures which idea?</div>
+            <div class="widget-options">
+                <button data-correct="true">How long will you keep abusing our patience, Catiline?</button>
+                <button data-correct="false">Catiline, you are welcome among us</button>
+                <button data-correct="false">Let us make peace, Catiline</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">In your own words: why is this night remembered as a triumph of <em>rhetoric</em> in particular &mdash; not of battle? Think it through, then reveal one way to say it.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body">Cicero defeated a violent conspiracy without an army &mdash; he used only evidence, timing, and the power of a well-made speech. By naming the plot openly and shaming Catiline before the Senate, he made it impossible for the conspiracy to continue. That is rhetoric as action: words that <em>do</em> something in the world. It's why Rome remembered the speech, not a sword.</div>
+        </div>
+    </div>
+
+    <!-- ETYMOLOGY MOMENT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; ETYMOLOGY MOMENT</div>
+        <div class="etym-box">
+            <div class="lbl">&#127793; FROM <span class="lat">DĪCERE</span> &amp; <span class="lat">DŪCERE</span> &mdash; THE ROOTS OF LEADERSHIP</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Cicero's whole career lived on two of this week's verbs. <span class="lat">Dīcere</span> (to say) gives us <strong>diction</strong>, <strong>dictate</strong>, and <strong>predict</strong> &mdash; and a <em>verdict</em> is literally a &ldquo;true saying&rdquo; (<span class="lat">vērum</span> + <span class="lat">dictum</span>). <span class="lat">Dūcere</span> (to lead) gives us <strong>conduct</strong>, <strong>produce</strong>, and <strong>educate</strong> &mdash; to <em>educate</em> is to &ldquo;lead out&rdquo; (<span class="lat">ē-</span> + <span class="lat">dūcere</span>) a mind toward what is true. A great orator did both at once: he <em>said</em> the right words and thereby <em>led</em> a nation.</p>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 10.05</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you pull the whole week together with mixed practice &mdash; then you're ready for the module's graded work: the Ludus, the Translation Assignment, and the Module Quiz.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then retell the Catilinarian Conspiracy in three sentences &mdash; and be sure to explain how Cicero &ldquo;conquered&rdquo; without a battle.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; YOU READ LATIN TODAY</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Real sentences, a real turning point in history &mdash; and grammar that finally carries the drama. One more day of practice and the module is yours.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 10.04 &middot; Reading &mdash; Cicero vs. Catiline</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — well read.'
+        : 'Not quite — reread the passage (or check the word endings) and try again.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

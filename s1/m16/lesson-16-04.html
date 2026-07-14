@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 16.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 16</div>
+        <div style="font-size: 12px; color: #666;">Imperative &amp; Vocative</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 16.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">VR Museum workshop</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Art of Roman Rhetoric</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 16.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> The Curator's Voice &mdash; Planning Your Museum</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Commands and address aren't only for generals. They're the everyday voice of a guide welcoming you into a room.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Think of the last museum you walked through: <em>Enter here. Look at this. Please don't touch.</em> Every one of those is an imperative &mdash; and a good guide greets you by name. Today you read a Roman guide's voice, then turn to your own <strong>VR Aeneas Museum</strong>: what five rooms will you build, what belongs in each, and how will you address your visitor? You'll also trace this module's three verbs &mdash; <span class="lat">imperāre</span>, <span class="lat">vocāre</span>, <span class="lat">nōlō</span> &mdash; into a surprising amount of English.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read and translate commands and direct address in a museum-guide context.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> plan five rooms for my VR Aeneas museum and connect <span class="lat">imperāre</span>, <span class="lat">vocāre</span>, and <span class="lat">nōlō</span> to English.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; THE GUIDE'S VOICE <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Reading a curator lead a visitor</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Before you read, picture the tone. A museum guide isn't a general on a battlefield &mdash; yet a guide gives orders constantly.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Think of a guided tour. How many of the guide's lines are actually <em>commands</em>?</div>
+            <div class="widget-options">
+                <button data-response="Right — almost every line. 'Follow me. Look here. Step this way. Don't touch.' A tour is one imperative after another, softened by a friendly voice. That's exactly the register you'll write in today.">Nearly all of them &mdash; a tour is one command after another</button>
+                <button data-response="Fair — it can feel like description. But listen closely and the verbs are usually orders: 'notice this,' 'imagine that,' 'move along.' The command form is doing quiet, courteous work the whole time.">Only a few &mdash; mostly it feels like description</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Now read each line aloud. A few words here are new &mdash; museum vocabulary &mdash; so they're glossed in the gray line. Watch for the imperatives (commands) and the vocatives (the visitor being addressed).</p>
+        <div class="sentence"><span class="s-lat">Salvē, hospes!</span><p class="parse">Greetings, guest! &mdash; <span class="lat">salvē</span> a greeting (literally the imperative &ldquo;be well!&rdquo;) &middot; <span class="lat">hospes</span> guest, visitor <em>(new; vocative = nominative, 3rd decl.)</em></p></div>
+        <div class="sentence"><span class="s-lat">Intrā et spectā!</span><p class="parse">Enter and look! &mdash; <span class="lat">intrā</span> command of <span class="lat">intrāre</span>, to enter <em>(new)</em> &middot; <span class="lat">et</span> and &middot; <span class="lat">spectā</span> command of <span class="lat">spectāre</span>, to look at, watch <em>(new)</em></p></div>
+        <div class="sentence"><span class="s-lat">Hīc nāvem Aenēae vidēs.</span><p class="parse">Here you see the ship of Aeneas. &mdash; <span class="lat">hīc</span> here <em>(new adverb)</em> &middot; <span class="lat">nāvem</span> acc. sg. of <span class="lat">nāvis</span> (ship) &middot; <span class="lat">Aenēae</span> gen. (of Aeneas) &middot; <span class="lat">vidēs</span> 2nd sg. (you see)</p></div>
+        <div class="sentence"><span class="s-lat">Lege titulum, amīce.</span><p class="parse">Read the label, friend. &mdash; <span class="lat">lege</span> command of <span class="lat">legere</span> (to read) &middot; <span class="lat">titulum</span> acc. sg., label, title <em>(new)</em> &middot; <span class="lat">amīce</span> voc. of <span class="lat">amīcus</span> (friend)</p></div>
+        <div class="sentence"><span class="s-lat">Nōlī tangere!</span><p class="parse">Do not touch! &mdash; <span class="lat">nōlī</span> + infinitive = negative command &middot; <span class="lat">tangere</span> to touch <em>(new; the classic museum sign)</em></p></div>
+        <div style="background:#F4F9FC;border:1px solid #D0D9E8;border-left:4px solid #2196D0;border-radius:6px;padding:12px 16px;margin:12px 0 0;">
+            <div style="font-size:11px;color:#1B6A94;letter-spacing:.3px;margin-bottom:6px;">&#128161; THE CURATING VERBS</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Three easy first-conjugation verbs power a guided tour: <span class="lat">intrāre</span> (enter &rarr; <em>entrance</em>), <span class="lat">spectāre</span> (look at &rarr; <em>spectator, spectacle</em>), and <span class="lat">mōnstrāre</span> (show, point out &rarr; <em>demonstrate</em>). Their commands are regular: <span class="lat">intrā / intrāte</span>, <span class="lat">spectā / spectāte</span>, <span class="lat">mōnstrā / mōnstrāte</span>.</p>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; VR MUSEUM WORKSHOP <span class="pill-time">14 min</span></div>
+        <div class="culture-box">
+            <div class="lbl">&#127963;&#65039; YOUR FIVE ROOMS &middot; AENEAS, FROM TROY TO ROME (<em>AENEID</em> 1&ndash;6)</div>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">Back at the end of Quarter 1 you launched the <strong>VR Aeneas Museum</strong> project: a five-room virtual museum tracing Aeneas's journey from the fall of Troy to the shore of Italy. Today's job is to <em>plan</em>. A museum isn't a pile of objects &mdash; it's a path a visitor walks. Decide what belongs in each room, and how a guide would lead someone through it.</p>
+            <table class="gtable" style="margin:6px 0;">
+                <thead><tr><th>Room</th><th>Latin name</th><th>What belongs in it</th></tr></thead>
+                <tbody>
+                    <tr><td>1. The Fall of Troy</td><td><span class="lat">Trōia</span></td><td>The wooden horse, the burning city, Aeneas carrying his father Anchises out of the flames.</td></tr>
+                    <tr><td>2. The Sea &amp; the Storms</td><td><span class="lat">Mare</span></td><td>The Trojan fleet, Juno's storm, the anger of the gods, the long voyage west.</td></tr>
+                    <tr><td>3. Carthage &amp; Dido</td><td><span class="lat">Carthāgō</span></td><td>Queen Dido, the rising city, the doomed love, the fatal choice between <span class="lat">amor</span> and <span class="lat">pietas</span>.</td></tr>
+                    <tr><td>4. The Underworld</td><td><span class="lat">Īnferī</span></td><td>The descent, the shade of Anchises, the parade of future Roman heroes.</td></tr>
+                    <tr><td>5. Arrival in Italy</td><td><span class="lat">Ītalia</span></td><td>The Trojans land; the future site of Rome; destiny fulfilled.</td></tr>
+                </tbody>
+            </table>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:8px 0 0;">Each room needs a <strong>title</strong>, a short <strong>description</strong>, and at least one <strong>Latin caption</strong> &mdash; and this is where this week's grammar pays off. Address your visitor and direct them: <span class="lat">Intrā, hospes!</span> (&ldquo;Enter, guest!&rdquo;) &middot; <span class="lat">Spectā nāvem!</span> (&ldquo;Look at the ship!&rdquo;) &middot; <span class="lat">Nōlī tangere!</span> (&ldquo;Do not touch!&rdquo;). A vocative to welcome, an imperative to guide, a negative command to protect the exhibit.</p>
+        </div>
+        <div class="virtue-box">
+            <div class="lbl">&#129333; COURTESY &middot; THE ROMAN GUEST</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Romans took <span class="lat">hospitium</span> &mdash; the sacred bond of host and guest &mdash; seriously. To welcome a stranger well was a mark of good character. When you address your museum visitor as <span class="lat">hospes</span> (&ldquo;guest&rdquo;) and invite them in, you are stepping into an old and honored Roman role: the gracious host who makes a visitor feel expected and safe.</p>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 3 &middot; ETYMOLOGY MOMENT <span class="pill-time">6 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Three verbs, a shelf of English</h3>
+        <div class="etym-box">
+            <div class="lbl">&#127793; FROM <span class="lat">IMPERĀRE</span> (TO COMMAND)</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The <strong>imperative</strong> mood is literally &ldquo;the commanding&rdquo; form. From the same root come <strong>imperious</strong> (bossy, commanding), and &mdash; through <span class="lat">imperātor</span>, &ldquo;commander&rdquo; &mdash; the English <strong>emperor</strong> and <strong>empire</strong>. A Roman general hailed <span class="lat">imperātor</span> by his troops had, in one word, both a military honor and the seed of a title that would rule the world.</p>
+        </div>
+        <div class="etym-box">
+            <div class="lbl">&#127793; FROM <span class="lat">VOCĀRE</span> (TO CALL)</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The <strong>vocative</strong> case is the &ldquo;calling&rdquo; case &mdash; the case for calling someone by name. From <span class="lat">vocāre</span> English grows <strong>vocal</strong>, <strong>vocation</strong> (a &ldquo;calling&rdquo;), and a whole family of <span class="lat">-voke</span> words: <strong>evoke</strong> (call out), <strong>invoke</strong> (call upon), <strong>revoke</strong> (call back), <strong>convoke</strong> (call together).</p>
+        </div>
+        <div class="etym-box">
+            <div class="lbl">&#127793; FROM <span class="lat">NŌLŌ</span> (TO BE UNWILLING)</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The <span class="lat">nōlī</span> of your negative commands is a form of <span class="lat">nōlō</span>. It survives in the phrase <strong><em>nōlēns volēns</em></strong> &mdash; &ldquo;unwilling (or) willing,&rdquo; that is, <em>whether you like it or not</em>. English still borrows it when something happens to a person <em>nolens volens</em>.</p>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 4 &middot; CHECK YOUR READING <span class="pill-time">8 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five checks &mdash; some read the guide's Latin, some test your museum plan and etymology. Take them slowly.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; translate</div>
+            <div class="widget-question">A guide says <span class="lat">Intrā, hospes!</span> This means:</div>
+            <div class="widget-options">
+                <button data-correct="true">Enter, guest!</button>
+                <button data-correct="false">The guest enters.</button>
+                <button data-correct="false">Show the guest in.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the museum plan</div>
+            <div class="widget-question">Which of your five rooms is the home for Queen Dido?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">Trōia</span> (Troy)</button>
+                <button data-correct="true"><span class="lat">Carthāgō</span> (Carthage)</button>
+                <button data-correct="false"><span class="lat">Īnferī</span> (the Underworld)</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; etymology</div>
+            <div class="widget-question">The English words <em>emperor</em> and <em>empire</em> descend from which Latin verb?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">vocāre</span></button>
+                <button data-correct="false"><span class="lat">nōlō</span></button>
+                <button data-correct="true"><span class="lat">imperāre</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; make the connection</div>
+            <div class="widget-question">The vocative &mdash; the &ldquo;calling&rdquo; case &mdash; takes its name from which Latin verb?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">imperāre</span></button>
+                <button data-correct="true"><span class="lat">vocāre</span></button>
+                <button data-correct="false"><span class="lat">portāre</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; read the sign</div>
+            <div class="widget-question">A display in your museum reads <span class="lat">Nōlī tangere!</span> It tells the visitor:</div>
+            <div class="widget-options">
+                <button data-correct="false">Please touch the exhibit.</button>
+                <button data-correct="true">Do not touch.</button>
+                <button data-correct="false">Look closely.</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Write a one-line Latin caption for the entrance of your museum: welcome a visitor and tell them to look and read. Say it, then reveal one good version.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body"><span class="lat">Salvē, hospes! Spectā et lege!</span> &mdash; &ldquo;Greetings, guest! Look and read!&rdquo; A vocative to welcome (<span class="lat">hospes</span>) and two singular imperatives to guide (<span class="lat">spectā</span>, <span class="lat">lege</span>). Addressing a group? <span class="lat">Salvēte, hospitēs! Spectāte et legite!</span></div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 16.05</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you pull the whole week together with mixed practice &mdash; then you're ready for the module's graded work: the Ludus, the Translation Assignment, and the Module Quiz.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then jot a title and a one-line Latin caption for at least <strong>two</strong> of your five museum rooms &mdash; using a vocative and an imperative in each. (Save these; you'll reuse them at the S1 Final.)</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; YOU HAVE A CURATOR'S VOICE</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Real Latin, a real plan, and grammar doing real work &mdash; welcoming, guiding, protecting. One more day of practice and the module is yours.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 16.04 &middot; VR Museum workshop</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — well read, curator.'
+        : 'Not quite — reread the guide sentences (or the etymology boxes) and try once more.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

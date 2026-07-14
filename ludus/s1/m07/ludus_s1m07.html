@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Beginning Latin &mdash; Module 7 Timed Practice (Ludus)</title>
+<style>
+    :root{
+      --navy:#0E1C42; --cyan:#55C8E8; --ink:#22293a; --muted:#7a8190;
+      --red:#E23A33; --red-d:#C02922; --gold:#FFC23D; --gold-d:#E69A12;
+      --teal:#1FC1A8; --violet:#8A4FD6; --line:#e8ebf3; --soft:#f4f6fc;
+    }
+    *{box-sizing:border-box;}
+    body{ margin:0; font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink);
+      background:radial-gradient(1200px 600px at 50% -10%, #eaf3ff 0%, #eef0f8 45%, #e7e9f4 100%); min-height:100vh; }
+    .frame{ max-width:780px; margin:0 auto; background:#fff; min-height:100vh; box-shadow:0 10px 50px rgba(20,20,60,.16); position:relative; overflow:hidden; }
+    .serif{ font-family:Georgia,"Times New Roman",serif; }
+    .hd{ background:linear-gradient(120deg,#0E1C42,#1c3270); padding:18px 30px; border-bottom:4px solid var(--cyan); }
+    .hd .school{ font-size:18px; color:#fff; }
+    .hd .tag{ font-size:11px; color:var(--cyan); letter-spacing:.4px; }
+    .hd .course{ font-size:23px; color:#fff; margin-top:7px; letter-spacing:1.6px; }
+    .body{ padding:28px 30px 44px; position:relative; z-index:1; }
+    .screen{ display:none; } .screen.active{ display:block; animation:rise .3s ease; }
+    @keyframes rise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+    h2.lh{ font-family:Georgia,serif; color:var(--navy); font-size:26px; margin:0 0 12px; }
+    p{ font-size:16.5px; line-height:1.65; }
+    .card{ background:#fff; border:1px solid var(--line); border-radius:18px; padding:22px 24px; margin:18px 0; box-shadow:0 6px 22px rgba(30,30,80,.06); }
+    .card.glow{ background:linear-gradient(135deg,#fff,#fffdf4); border-color:#f1e2b4; }
+    .kick{ font-size:11px; font-weight:800; letter-spacing:1.1px; text-transform:uppercase; margin-bottom:12px;
+      background:linear-gradient(90deg,var(--red),var(--gold-d)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .disc{ position:relative; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+      box-shadow:0 10px 24px rgba(0,0,0,.22), inset 0 -5px 10px rgba(0,0,0,.22), inset 0 4px 8px rgba(255,255,255,.5); }
+    .disc .inner{ background:radial-gradient(circle at 38% 30%, #ffffff, #eef1f7); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:inset 0 2px 5px rgba(0,0,0,.16); }
+    .disc .shine{ position:absolute; top:8%; left:15%; width:48%; height:30%; border-radius:50%; background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0)); pointer-events:none; }
+    .badge{ display:flex; flex-direction:column; align-items:center; gap:9px; }
+    .badge-label{ font-family:Georgia,serif; font-weight:700; letter-spacing:2px; color:var(--navy); text-transform:uppercase; }
+    .pips{ display:flex; gap:6px; } .pip{ width:9px; height:9px; border-radius:50%; background:#dfe3ee; }
+    .pip.on{ background:var(--gold); box-shadow:0 0 6px rgba(255,194,61,.8); }
+    .legend{ display:flex; flex-direction:column; gap:11px; }
+    .lrow{ display:flex; align-items:center; gap:15px; background:var(--soft); border:1px solid var(--line); border-radius:15px; padding:11px 15px; }
+    .lrow .ltext{ font-size:13.5px; line-height:1.5; color:#4b5160; }
+    .lrow .ltext b{ color:var(--navy); font-family:Georgia,serif; letter-spacing:.5px; }
+    label{ font-size:14px; color:var(--muted); display:block; margin-bottom:8px; }
+    input[type=text]{ font-family:inherit; font-size:16px; padding:13px 15px; border:2px solid var(--line); border-radius:12px; width:100%; max-width:380px; outline:none; transition:border-color .15s; }
+    input[type=text]:focus{ border-color:var(--gold); }
+    .btn{ font-family:inherit; font-size:16.5px; font-weight:800; padding:14px 30px; border-radius:14px; border:none; cursor:pointer; color:#fff;
+      background:linear-gradient(135deg,var(--red),var(--red-d)); box-shadow:0 8px 20px rgba(226,58,51,.34); transition:transform .08s, box-shadow .15s, filter .15s; }
+    .btn:hover{ filter:brightness(1.05); box-shadow:0 10px 24px rgba(226,58,51,.4); }
+    .btn:active{ transform:translateY(2px); }
+    .btn:disabled{ background:#c9ccd6; box-shadow:none; cursor:not-allowed; }
+    .btn.gold{ background:linear-gradient(135deg,var(--gold),var(--gold-d)); color:#5a3d00; box-shadow:0 8px 20px rgba(230,154,18,.36); }
+    .btn.alt{ background:#fff; color:var(--red-d); border:2px solid #f0c9c7; box-shadow:none; }
+    .btn.alt:hover{ background:#fff5f4; filter:none; }
+    .hudbar{ display:flex; gap:12px; margin-bottom:16px; }
+    .chip{ flex:1; background:var(--soft); border:1px solid var(--line); border-radius:15px; padding:11px 8px; text-align:center; }
+    .chip .lab{ font-size:11px; color:var(--muted); letter-spacing:.6px; text-transform:uppercase; }
+    .chip b{ display:block; font-size:24px; font-family:Georgia,serif; color:var(--navy); margin-top:2px; }
+    .chip b.warn{ color:var(--red); animation:pulse .6s infinite alternate; }
+    @keyframes pulse{ to{ transform:scale(1.12); } }
+    .tbar-wrap{ height:9px; background:#e9ecf6; border-radius:99px; overflow:hidden; margin-bottom:22px; }
+    .tbar{ height:100%; width:100%; border-radius:99px; background:linear-gradient(90deg,#22c55e,#16a34a); transition:width 1s linear, background .4s; }
+    .qcard{ background:linear-gradient(135deg,#ffffff,#fbfcff); border:1px solid var(--line); border-radius:20px; padding:30px 28px; box-shadow:0 12px 32px rgba(30,30,80,.09); }
+    .qtype{ display:inline-block; font-size:11px; font-weight:800; letter-spacing:1.1px; text-transform:uppercase; color:#fff; background:linear-gradient(90deg,var(--violet),#6a33b8); padding:5px 12px; border-radius:99px; margin-bottom:16px; }
+    .qtext{ font-size:24px; color:var(--navy); line-height:1.4; margin-bottom:24px; }
+    .qtext em{ color:var(--red-d); font-style:italic; }
+    .opts{ display:grid; grid-template-columns:1fr 1fr; gap:13px; }
+    .opt{ font-family:inherit; font-size:17px; font-weight:600; padding:17px; border:2px solid var(--line); border-radius:15px; background:#fff; color:var(--ink); cursor:pointer; transition:transform .08s, border-color .12s, background .12s, box-shadow .12s; }
+    .opt:hover{ border-color:var(--gold); background:#fffdf4; transform:translateY(-2px); box-shadow:0 6px 14px rgba(230,154,18,.16); }
+    .opt.right{ background:linear-gradient(135deg,#d7f7e3,#b7eecb); border-color:#22c55e; color:#10733b; }
+    .opt.wrong{ background:linear-gradient(135deg,#fde2df,#f9cdc8); border-color:var(--red); color:#a3251e; }
+    .flash{ min-height:24px; font-size:16px; font-weight:800; margin-top:18px; text-align:center; }
+    .flash.ok{ color:#10733b; } .flash.no{ color:#a3251e; }
+    .rwrap{ text-align:center; }
+    .victory{ font-family:Georgia,serif; font-size:30px; color:var(--gold-d); margin:2px 0 2px; }
+    .ring{ position:relative; width:180px; height:180px; margin:8px auto 4px; }
+    .ring svg{ transform:rotate(-90deg); }
+    .ring .num{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .ring .num .g{ font-family:Georgia,serif; font-size:52px; color:var(--navy); line-height:1; }
+    .ring .num .of{ font-size:12px; color:var(--muted); letter-spacing:.5px; }
+    .pop{ animation:pop .55s cubic-bezier(.2,1.5,.4,1) both; }
+    @keyframes pop{ 0%{ transform:scale(0) rotate(-25deg); opacity:0; } 100%{ transform:scale(1) rotate(0); opacity:1; } }
+    .statline{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:18px 0 6px; }
+    .stat{ background:var(--soft); border:1px solid var(--line); border-radius:14px; padding:10px 16px; min-width:90px; }
+    .stat b{ display:block; font-size:22px; font-family:Georgia,serif; color:var(--navy); }
+    .stat .lab{ font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
+    .suggest{ background:linear-gradient(135deg,#eef9ff,#e6f0ff); border:1px solid #cfe4f5; border-radius:14px; padding:13px 18px; margin:14px auto; max-width:520px; font-size:15px; color:#1d3a57; }
+    .suggest b{ color:#15506f; }
+    .vcode{ font-family:Consolas,monospace; background:var(--soft); border:1px dashed var(--gold-d); border-radius:10px; padding:7px 14px; display:inline-block; color:var(--red-d); font-size:15px; letter-spacing:.5px; }
+    .note{ font-size:13px; color:var(--muted); line-height:1.55; }
+    .champ{ background:linear-gradient(135deg,#2a1a4d,#3b2470); color:#fff; border-radius:16px; padding:16px 20px; margin:18px auto 0; max-width:560px; }
+    .champ .t{ font-family:Georgia,serif; color:var(--gold); font-size:16px; letter-spacing:.5px; }
+    .champ .d{ font-size:13.5px; color:#d9d2f0; line-height:1.5; margin-top:4px; }
+    /* SCORM status banner */
+    .scorm-banner{ border-radius:14px; padding:13px 18px; margin:14px auto; max-width:520px; font-size:15px; font-weight:700; text-align:center; }
+    .scorm-banner.ok{ background:linear-gradient(135deg,#d7f7e3,#b7eecb); color:#10733b; border:1px solid #22c55e; }
+    .scorm-banner.pending{ background:linear-gradient(135deg,#eef9ff,#e6f0ff); color:#15506f; border:1px solid #cfe4f5; }
+    #confetti{ position:fixed; inset:0; pointer-events:none; z-index:60; }
+    @media (max-width:560px){ .opts{ grid-template-columns:1fr; } .body{ padding:22px 18px 36px; } }
+
+    /* ── RANK-UP PROMOTION OVERLAY ── */
+    .rankup-ov{ position:fixed; inset:0; background:rgba(8,12,32,.93); z-index:55; display:flex; align-items:center; justify-content:center; }
+    .rankup-card{ text-align:center; padding:44px 36px 36px; max-width:440px; width:90%; animation:rise .4s ease both; }
+    .ru-eyebrow{ font-size:11px; letter-spacing:2.8px; text-transform:uppercase; color:rgba(255,255,255,.45); margin-bottom:12px; }
+    .ru-rank{ font-family:Georgia,serif; font-size:46px; font-weight:700; color:var(--gold); letter-spacing:1px; margin:12px 0 6px; animation:pop .6s cubic-bezier(.2,1.5,.4,1) both .18s; }
+    .ru-desc{ font-size:15px; color:rgba(255,255,255,.72); line-height:1.6; max-width:360px; margin:0 auto 14px; }
+    .ru-prev{ font-size:13px; color:rgba(255,255,255,.35); margin-top:10px; }
+    .ru-tap{ font-size:12px; color:rgba(255,255,255,.25); margin-top:22px; letter-spacing:.5px; }
+    .ru-stars{ font-size:28px; letter-spacing:6px; margin-bottom:10px; animation:pop .5s ease both .35s; }
+
+    /* ── PERSONAL BEST BANNER ── */
+    .pb-banner{ border-radius:12px; padding:10px 16px; margin:10px auto; max-width:520px; font-size:13.5px; font-weight:700; text-align:center; }
+    .pb-first{ background:linear-gradient(135deg,#eef4ff,#dbe8ff); color:#1e3a8a; border:1px solid #6ea0f5; }
+    .pb-new{ background:linear-gradient(135deg,#d7f7e3,#b7eecb); color:#10733b; border:1px solid #22c55e; }
+    .pb-same{ background:var(--soft); color:var(--muted); border:1px solid var(--line); }
+    .pb-below{ background:var(--soft); color:var(--muted); border:1px solid var(--line); font-weight:400; }
+
+    /* ── PER-RANK RESULTS ACCENT ── */
+    .rank-imperator .rwrap{ border-top:4px solid var(--gold); }
+    .rank-tribunus .rwrap{ border-top:4px solid #FFCB45; }
+    .rank-centurio .rwrap{ border-top:4px solid var(--teal); }
+    .rank-miles .rwrap{ border-top:4px solid #5AA0E6; }
+    .rank-tiro .rwrap{ border-top:4px solid var(--muted); }
+
+    /* ── IMPERĀTOR BADGE GLOW ── */
+    @keyframes imp-glow{ 0%,100%{ filter:drop-shadow(0 0 10px #FFC23D) drop-shadow(0 0 22px rgba(138,79,214,.6)); } 50%{ filter:drop-shadow(0 0 20px #FFC23D) drop-shadow(0 0 44px rgba(138,79,214,.9)); } }
+    .glow-imp{ animation:imp-glow 1.9s ease-in-out infinite; display:inline-block; }
+    /* rank-up screen must override .screen.active{display:block} with flex */
+    #screen-rankup.active{ display:flex; animation:none; }
+    /* suggest-name button sizing */
+    #btn-suggest-name{ padding:10px 14px; font-size:13px; white-space:nowrap; border-radius:10px; flex-shrink:0; }
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<div class="frame">
+  <div class="hd">
+    <div style="display:flex; align-items:center; gap:13px;">
+      <div style="width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width:44px;height:34px;object-fit:contain;" /></div>
+      <div><div class="school">Optima Academy Online</div><div class="tag">An Education Experience Company</div></div>
+    </div>
+    <div class="course">BEGINNING LATIN</div>
+  </div>
+  <div class="body">
+
+    <!-- ===== START ===== -->
+    <div id="screen-start" class="screen active">
+      <h2 class="lh">&#9876;&#65039; Module 7 Timed Practice: The Dative Case</h2>
+      <p>Welcome to the <em>ludus</em> (the Roman word for both "school" and "game"). Face <strong>10 quick questions</strong> on the dative case (1st and 2nd declension forms), the dative as the indirect object ("to/for" someone), telling the direct object from the indirect object, and the vocabulary of the Roman underworld, with <strong>90 seconds</strong> on the clock. With the clock running there is no time to look anything up, so trust your training, soldier.</p>
+
+      <div class="card">
+        <div class="kick">&#9201; How scoring works</div>
+        <p style="margin:0 0 8px;"><strong>Ten questions. Ninety seconds. Three attempts.</strong> Your best of the three attempts is the score you record. <strong>Up to 90 points</strong> come from answering correctly, so take the time you need to read carefully. Finishing with time to spare earns a <strong>speed bonus of up to 10 points</strong>. Accuracy first; speed gives you the edge. Questions you do not reach before time runs out count as missed.</p>
+      </div>
+
+      <div class="card glow">
+        <div class="kick">&#127941; Ranks you can earn</div>
+        <div class="legend" id="legend"></div>
+      </div>
+
+      <div class="champ">
+        <div class="t">&#127942; Train for the Quarter 1 Championship</div>
+        <div class="d">Every weekly ludus sharpens you for the <strong>Ludus Maximus</strong>: a grand cumulative championship at the end of the quarter covering everything from Modules 0 through 8. Climb the ranks now, and arrive ready to compete.</div>
+      </div>
+
+      <div class="card">
+        <div class="kick">&#9999; Before you begin</div>
+        <label for="player">Type your name (it appears on your results sheet):</label>
+        <div style="display:flex; gap:8px; align-items:stretch; margin-top:4px;">
+          <input type="text" id="player" maxlength="40" placeholder="e.g., Julia Marcella" style="flex:1; margin:0; max-width:none;" />
+          <button type="button" id="btn-suggest-name" class="btn alt" title="Generate a random Roman name">&#9876;&#65039; Roman name</button>
+        </div>
+        <label style="display:flex; align-items:center; gap:10px; margin-top:16px; color:#22293a; font-size:15px; cursor:pointer;"><input type="checkbox" id="accom" style="width:18px; height:18px; cursor:pointer;" /> I have an IEP or 504 plan (extended time)</label>
+        <p class="note" style="margin:6px 0 0;">Extended time gives you time and a half: 135 seconds instead of 90. Your results sheet will note that the accommodation was used.</p>
+        <p id="attempts-left" class="note" style="margin:14px 0 0;"></p>
+      </div>
+
+      <button class="btn" id="btn-begin">Begin the Ludus &#9654;</button>
+    </div>
+
+    <!-- ===== PLAY ===== -->
+    <div id="screen-play" class="screen">
+      <div class="hudbar">
+        <div class="chip"><div class="lab">Time</div><b id="hud-time">1:30</b></div>
+        <div class="chip"><div class="lab">Question</div><b id="hud-prog">1/10</b></div>
+        <div class="chip"><div class="lab">Correct</div><b id="hud-correct">0</b></div>
+      </div>
+      <div class="tbar-wrap"><div class="tbar" id="tbar"></div></div>
+      <div class="qcard">
+        <div class="qtype" id="q-type">Question</div>
+        <div class="qtext" id="q-text"></div>
+        <div class="opts" id="q-opts"></div>
+        <div class="flash" id="q-flash"></div>
+      </div>
+    </div>
+
+    <!-- ===== RESULTS ===== -->
+    <div id="screen-results" class="screen">
+      <div class="rwrap">
+        <div class="victory" id="r-victory">&#127881; Victoria!</div>
+        <div class="ring">
+          <svg width="180" height="180" viewBox="0 0 180 180">
+            <circle cx="90" cy="90" r="78" fill="none" stroke="#eef0f8" stroke-width="13"/>
+            <circle id="ring-fg" cx="90" cy="90" r="78" fill="none" stroke="#8A4FD6" stroke-width="13" stroke-linecap="round" stroke-dasharray="490" stroke-dashoffset="490"/>
+          </svg>
+          <div class="num"><div class="g" id="r-grade">0</div><div class="of">OUT OF 100</div></div>
+        </div>
+        <div id="r-badge" style="margin:8px 0 4px;"></div>
+        <div id="r-pb" class="pb-banner" style="display:none;"></div>
+        <p class="note" id="r-rankdesc" style="max-width:520px;margin:6px auto 0;"></p>
+        <div class="statline">
+          <div class="stat"><b id="r-correct">0</b><div class="lab">Correct</div></div>
+          <div class="stat"><b id="r-acc">0%</b><div class="lab">Accuracy</div></div>
+          <div class="stat"><b id="r-this">0</b><div class="lab">This attempt</div></div>
+          <div class="stat"><b id="r-att">1/3</b><div class="lab">Attempts</div></div>
+        </div>
+        <p class="note" id="r-breakdown" style="margin:2px auto 6px;max-width:480px;"></p>
+        <div class="suggest" id="r-suggest"></div>
+
+        <!-- SCORM: shown when running inside Canvas -->
+        <div id="scorm-banner" class="scorm-banner" style="display:none;"></div>
+
+        <!-- Fallback: shown when running standalone (no LMS) -->
+        <div id="fallback-block">
+          <p style="margin:4px 0 4px;font-size:14px;" id="vcode-label">Verification code (for your teacher):</p>
+          <div class="vcode" id="r-code">&ndash;</div>
+          <p class="note" id="r-accom" style="margin:8px auto 0; max-width:480px;"></p>
+          <div style="margin:22px 0 8px;">
+            <button class="btn gold" id="btn-pdf">&#128229; Download my results (PDF)</button>
+            <button class="btn alt" id="btn-again">Play again</button>
+          </div>
+          <p class="note" id="r-attemptmsg" style="max-width:520px;margin:8px auto 0;"></p>
+          <p class="note" id="nextstep-note" style="max-width:560px;margin:14px auto 0;">Next step: download your results sheet and upload it to the <strong>Module 7 Timed Practice</strong> assignment in Canvas. Your teacher records your best score.</p>
+        </div>
+
+        <!-- SCORM: play-again button (separate from fallback block) -->
+        <div id="scorm-again-wrap" style="display:none; margin:18px 0 8px;">
+          <button class="btn alt" id="btn-again-scorm">Play again to improve your score</button>
+        </div>
+
+        <div class="champ"><div class="t">&#127942; Onward to the Ludus Maximus</div><div class="d">Each rank you earn is training for the Quarter 1 Championship at the end of the quarter. Keep climbing.</div></div>
+      </div>
+    </div>
+
+    <!-- ===== RANK-UP PROMOTION OVERLAY ===== -->
+    <div id="screen-rankup" class="screen rankup-ov">
+      <div class="rankup-card">
+        <div id="ru-stars" class="ru-stars"></div>
+        <div class="ru-eyebrow">You have been promoted to the rank of</div>
+        <div id="ru-badge" style="margin:16px 0 4px;"></div>
+        <div id="ru-rank" class="ru-rank"></div>
+        <div id="ru-desc" class="ru-desc"></div>
+        <div id="ru-prev" class="ru-prev"></div>
+        <div class="ru-tap">Tap anywhere to continue &rarr;</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   SCORM 1.2 wrapper
+   Finds the LMS API object in parent frames,
+   reports score, and calls LMSFinish when done.
+───────────────────────────────────────────── */
+var SCORM12 = (function () {
+  var _api = null, _ready = false, _done = false;
+
+  function _find(w) {
+    var n = 0;
+    while (!w.API && w.parent && w.parent !== w && n++ < 7) w = w.parent;
+    return w.API || null;
+  }
+
+  function init() {
+    _api = _find(window);
+    if (!_api && window.opener) _api = _find(window.opener);
+    if (_api) {
+      _api.LMSInitialize('');
+      _ready = true;
+    }
+    return _ready;
+  }
+
+  // Update score in LMS (does not close the session)
+  function set(score) {
+    if (!_api || !_ready || _done) return;
+    score = Math.round(Math.min(100, Math.max(0, score)));
+    _api.LMSSetValue('cmi.core.score.raw', String(score));
+    _api.LMSSetValue('cmi.core.score.min', '0');
+    _api.LMSSetValue('cmi.core.score.max', '100');
+    _api.LMSSetValue('cmi.core.lesson_status', 'completed');
+    _api.LMSCommit('');
+  }
+
+  // Finalize session (closes communication with LMS)
+  function finish(score) {
+    if (!_api || !_ready || _done) return;
+    score = Math.round(Math.min(100, Math.max(0, score)));
+    _api.LMSSetValue('cmi.core.score.raw', String(score));
+    _api.LMSSetValue('cmi.core.score.min', '0');
+    _api.LMSSetValue('cmi.core.score.max', '100');
+    _api.LMSSetValue('cmi.core.lesson_status', 'completed');
+    _api.LMSCommit('');
+    _api.LMSFinish('');
+    _done = true;
+    _ready = false;
+  }
+
+  function active() { return _ready; }
+  function isDone()  { return _done; }
+
+  return { init: init, set: set, finish: finish, active: active, isDone: isDone };
+})();
+
+/* ─────────────────────────────────────────────
+   Game logic (unchanged from original, except
+   SCORM calls inserted at marked points)
+───────────────────────────────────────────── */
+(function(){
+  var GAME_SECONDS=90, N_QUESTIONS=10, MAX_ATTEMPTS=3, STORE='latin_s1m07_';
+
+  // ── SCORM: initialise on load ──
+  var scormActive = SCORM12.init();
+
+  var RANKS={
+    tiro:{full:'Tiro',band:'0&ndash;59',lvl:1,emoji:'&#128481;&#65039;',c1:'#D08B43',c2:'#9A5F23',desc:'A tiro is a brand new recruit, fresh and still in training. Every legionary started here. Keep drilling and rise through the ranks.'},
+    miles:{full:'Miles',band:'60&ndash;69',lvl:2,emoji:'&#128737;&#65039;',c1:'#5AA0E6',c2:'#2E66B5',desc:'A miles is a full soldier who has earned a place in the ranks and can hold the line. Solid work.'},
+    centurio:{full:'Centurio',band:'70&ndash;79',lvl:3,emoji:'&#9876;&#65039;',c1:'#2FC9AE',c2:'#149B86',desc:'A centurio commands a centuria of about 80 men. Centurions were the tough, respected backbone of the legion.'},
+    tribunus:{full:'Tribunus',band:'80&ndash;89',lvl:4,emoji:'&#127894;&#65039;',c1:'#FFCB45',c2:'#E09B16',desc:'A tribunus militum is a senior officer trusted to lead whole cohorts and advise the general. Nearly to the top.'},
+    imperator:{full:'Imperator',band:'90&ndash;100',lvl:5,emoji:'&#128081;',c1:'#A878DD',c2:'#6A33B8',desc:'Imperator means commander. Victorious troops hailed their general as imperator. This is the summit of Roman military glory.'}
+  };
+  var ORDER=['imperator','tribunus','centurio','miles','tiro'];
+  function disc(key,size){ var r=RANKS[key]; var inner=Math.round(size*0.74), em=Math.round(size*0.4);
+    return '<span class="disc" style="width:'+size+'px;height:'+size+'px;background:linear-gradient(150deg,'+r.c1+' 0%,'+r.c2+' 100%);">'+
+      '<span class="inner" style="width:'+inner+'px;height:'+inner+'px;font-size:'+em+'px;">'+r.emoji+'</span><span class="shine"></span></span>'; }
+  function pips(lvl){ var s='<div class="pips">'; for(var i=1;i<=5;i++){ s+='<span class="pip'+(i<=lvl?' on':'')+'"></span>'; } return s+'</div>'; }
+  function badge(key,size){ var r=RANKS[key];
+    return '<div class="badge"><div class="pop">'+disc(key,size)+'</div><div class="badge-label" style="font-size:'+Math.round(size*0.16)+'px;">'+r.full+'</div>'+pips(r.lvl)+'</div>'; }
+
+  var SUGGEST = {
+    'Dative Forms':                 'Review the dative endings chart: 1st decl. sg. -ae / pl. -īs; 2nd decl. sg. -ō / pl. -īs. Note that both declensions share -īs in the dative plural.',
+    'Indirect Object':              'The dative case marks the indirect object — the person TO WHOM or FOR WHOM something is done. Look for verbs of giving, showing, telling, and sending.',
+    'Direct vs. Indirect Object':   'Direct object = accusative (what receives the action). Indirect object = dative (who benefits). A sentence can have both at the same time.',
+    'Underworld Vocabulary':        'Connect words in pairs: umbra (shadow) vs. anima (soul/breath); Tartarus (punishment) vs. Elysium (paradise); Charon (ferryman) vs. Cerberus (guardian dog).',
+    'Translation':                  'Find the verb first, then the subject (nominative), direct object (accusative), and indirect object (dative) — word order in Latin is flexible, cases do the work.',
+    'Grammar Review':               'Revisit Module 05 (genitive) and Module 04 (accusative) flashcards. When you see -ae, ask: is this dative singular, genitive singular, or nominative plural? Context decides.'
+  };
+
+  var POOL = [
+    {t:'Dative Forms', q:'What is the dative singular ending for a 1st declension noun like <em>umbra</em>?', o:['<em>-am</em>','<em>-ae</em>','<em>-ā</em>','<em>-ārum</em>'], a:1},
+    {t:'Dative Forms', q:'What is the dative plural ending for 1st declension nouns?', o:['<em>-ae</em>','<em>-ārum</em>','<em>-īs</em>','<em>-ās</em>'], a:2},
+    {t:'Dative Forms', q:'What is the dative singular ending for a 2nd declension noun like <em>Cerberus</em>?', o:['<em>-um</em>','<em>-ī</em>','<em>-ō</em>','<em>-e</em>'], a:2},
+    {t:'Dative Forms', q:'What is the dative plural ending for 2nd declension nouns?', o:['<em>-ōrum</em>','<em>-ō</em>','<em>-ī</em>','<em>-īs</em>'], a:3},
+    {t:'Dative Forms', q:'Which form is the dative singular of <em>anima, -ae</em>?', o:['<em>animam</em>','<em>animārum</em>','<em>animae</em>','<em>animīs</em>'], a:2},
+    {t:'Dative Forms', q:'Which form is the dative plural of <em>vīta, -ae</em>?', o:['<em>vītam</em>','<em>vītīs</em>','<em>vītae</em>','<em>vītārum</em>'], a:1},
+    {t:'Dative Forms', q:'Which form is the dative singular of <em>Tartarus, -ī</em>?', o:['<em>Tartarī</em>','<em>Tartarō</em>','<em>Tartarum</em>','<em>Tartarīs</em>'], a:1},
+    {t:'Dative Forms', q:'What case ending do <em>both</em> 1st and 2nd declension share in the dative <em>plural</em>?', o:['<em>-ae</em>','<em>-ō</em>','<em>-īs</em>','<em>-ī</em>'], a:2},
+    {t:'Dative Forms', q:'The form <em>animae</em> could be dative singular, genitive singular, <em>or</em> nominative plural. What resolves the ambiguity?', o:['the verb tense','context in the sentence','the gender of the noun','the declension number'], a:1},
+    {t:'Dative Forms', q:'Identify the dative plural: <em>umbrīs</em> or <em>umbrārum</em>?', o:['<em>umbrārum</em> (dative plural)','<em>umbrīs</em> (dative plural)','Both are dative plural','Neither; both are genitive'], a:1},
+    {t:'Dative Forms', q:'Which form is <em>not</em> a possible dative form of <em>umbra</em>?', o:['<em>umbrae</em>','<em>umbrīs</em>','<em>umbrō</em>','Both A and B are dative forms'], a:2},
+    {t:'Dative Forms', q:'The dative singular of <em>puer, puerī</em> (2nd decl., boy) is —', o:['<em>puerī</em>','<em>puerō</em>','<em>puerum</em>','<em>puerīs</em>'], a:1},
+    {t:'Indirect Object', q:'What grammatical role does the dative case mark?', o:['the subject of the verb','the direct object','the indirect object','possession'], a:2},
+    {t:'Indirect Object', q:'In the sentence "Aeneas gives a gift <em>to the shade</em>," which word is the indirect object?', o:['Aeneas','gives','gift','shade'], a:3},
+    {t:'Indirect Object', q:'Which English preposition best signals that a noun is functioning as an indirect object?', o:['of','to / for','by / with','in / on'], a:1},
+    {t:'Indirect Object', q:'In Latin, the indirect object is put in the — case.', o:['nominative','genitive','accusative','dative'], a:3},
+    {t:'Indirect Object', q:'<em>Charon animīs viam mōnstrat.</em> — What is the indirect object?', o:['<em>Charon</em>','<em>animīs</em>','<em>viam</em>','<em>mōnstrat</em>'], a:1},
+    {t:'Indirect Object', q:'<em>Plūtō umbrīs terram dat.</em> — To whom does Pluto give the land?', o:['to no one; <em>terram</em> is the indirect object','to <em>Plūtō</em>','to the shades (<em>umbrīs</em>)','to the earth'], a:2},
+    {t:'Indirect Object', q:'Which Latin sentence contains an indirect object in the dative?', o:['<em>Aenēās umbram videt.</em>','<em>Umbra in Tartarō manet.</em>','<em>Charon animae aurō respondet.</em>','<em>Cerberus magnus est.</em>'], a:2},
+    {t:'Indirect Object', q:'The indirect object answers the question —', o:['"Who performs the action?"','"What receives the action directly?"','"To whom or for whom is the action done?"','"Where does the action occur?"'], a:2},
+    {t:'Indirect Object', q:'<em>Magister discipulīs fābulam nārrat.</em> — What is the indirect object?', o:['<em>magister</em>','<em>discipulīs</em>','<em>fābulam</em>','<em>nārrat</em>'], a:1},
+    {t:'Indirect Object', q:'A verb that often takes an indirect object is one that means —', o:['to run or move quickly','to give, show, tell, or send','to be or exist','to praise or blame'], a:1},
+    {t:'Direct vs. Indirect Object', q:'In Latin, which case marks the <em>direct</em> object?', o:['nominative','genitive','accusative','dative'], a:2},
+    {t:'Direct vs. Indirect Object', q:'In "Charon shows Aeneas the river," <em>Aeneas</em> is the — and <em>the river</em> is the —.', o:['direct object; indirect object','indirect object; direct object','subject; direct object','indirect object; subject'], a:1},
+    {t:'Direct vs. Indirect Object', q:'<em>Charon animae flūmen mōnstrat.</em> — Which word is the <em>direct</em> object?', o:['<em>Charon</em>','<em>animae</em>','<em>flūmen</em>','<em>mōnstrat</em>'], a:2},
+    {t:'Direct vs. Indirect Object', q:'<em>Charon animae flūmen mōnstrat.</em> — Which word is the <em>indirect</em> object?', o:['<em>Charon</em>','<em>animae</em>','<em>flūmen</em>','<em>mōnstrat</em>'], a:1},
+    {t:'Direct vs. Indirect Object', q:'How do you tell a direct object from an indirect object in a Latin sentence?', o:['The direct object comes first in the sentence.','The direct object is accusative; the indirect object is dative.','The direct object is dative; the indirect object is accusative.','Both are accusative; word order decides.'], a:1},
+    {t:'Direct vs. Indirect Object', q:'<em>Plūtō Aenēae Elysium mōnstrat.</em> — <em>Elysium</em> is —', o:['the subject','the indirect object','the direct object','a predicate nominative'], a:2},
+    {t:'Direct vs. Indirect Object', q:'<em>Plūtō Aenēae Elysium mōnstrat.</em> — <em>Aenēae</em> is —', o:['the subject','the indirect object','the direct object','genitive singular'], a:1},
+    {t:'Direct vs. Indirect Object', q:'Which sentence has <em>both</em> a direct object and an indirect object?', o:['<em>Umbra in aquā stat.</em>','<em>Cerberus ferus est.</em>','<em>Charon animīs aurō respondet.</em>','<em>Aenēās Styga trānsit.</em>'], a:2},
+    {t:'Direct vs. Indirect Object', q:'The 1st declension dative singular <em>-ae</em> looks identical to which two other forms?', o:['nominative singular and accusative singular','genitive singular and nominative plural','accusative plural and genitive plural','ablative singular and dative plural'], a:1},
+    {t:'Direct vs. Indirect Object', q:'In <em>Umbra Charontī nōmen dīcit</em>, which word is the direct object?', o:['<em>Umbra</em>','<em>Charontī</em>','<em>nōmen</em>','<em>dīcit</em>'], a:2},
+    {t:'Underworld Vocabulary', q:'What does <em>umbra, -ae</em> mean?', o:['life','soul / breath','shade / ghost / shadow','death'], a:2},
+    {t:'Underworld Vocabulary', q:'What does <em>anima, -ae</em> mean?', o:['shade / ghost','soul / breath','life','underworld'], a:1},
+    {t:'Underworld Vocabulary', q:'What does <em>vīta, -ae</em> mean?', o:['death','soul','shade','life'], a:3},
+    {t:'Underworld Vocabulary', q:'What does <em>mors</em> mean?', o:['shade','soul','death','life'], a:2},
+    {t:'Underworld Vocabulary', q:'<em>Inferī</em> refers to —', o:['the living soldiers','the underworld / those below','the river Styx','a type of Roman punishment'], a:1},
+    {t:'Underworld Vocabulary', q:'<em>Tartarus</em> is best described as —', o:['the paradise where heroes rest','the river souls must cross','the place of punishment in the underworld','the three-headed dog guarding the gates'], a:2},
+    {t:'Underworld Vocabulary', q:'<em>Elysium</em> is best described as —', o:['the place of punishment','the paradise of the underworld','the river of forgetfulness','the name of the ferryman'], a:1},
+    {t:'Underworld Vocabulary', q:'Who is <em>Charon</em>?', o:['the three-headed dog','the ruler of the underworld','the ferryman who carries souls across the Styx','a hero who descends to the underworld'], a:2},
+    {t:'Underworld Vocabulary', q:'Who is <em>Cerberus</em>?', o:['the ferryman of the Styx','the ruler of the underworld','the three-headed dog guarding the underworld','a shade of a Roman hero'], a:2},
+    {t:'Underworld Vocabulary', q:'Who is <em>Plūtō</em>?', o:['the ferryman','the guardian dog','a shade from Troy','the ruler of the underworld'], a:3},
+    {t:'Underworld Vocabulary', q:'Which hero descends to the underworld in <em>Aeneid</em> Book 6?', o:['Hercules','Aeneas','Odysseus','Achilles'], a:1},
+    {t:'Underworld Vocabulary', q:'What is the <em>Styx</em>?', o:['the paradise of the underworld','a river in the underworld that souls must cross','the name for the shades of the dead','the place of punishment'], a:1},
+    {t:'Translation', q:'<em>Charon animīs viam mōnstrat.</em>', o:['The soul shows Charon the way.','Charon shows the way to the souls.','Charon and the souls travel the way.','The souls travel Charon\'s way.'], a:1},
+    {t:'Translation', q:'<em>Plūtō animae Elysium dat.</em>', o:['Pluto gives Elysium to the soul.','The soul gives Pluto Elysium.','Pluto and the soul are in Elysium.','Elysium is the home of the soul of Pluto.'], a:0},
+    {t:'Translation', q:'<em>Umbra Cerberō cibum dat.</em>', o:['Cerberus gives food to the shade.','The shade gives food to Cerberus.','Cerberus and the shade eat food.','The shade of Cerberus eats.'], a:1},
+    {t:'Translation', q:'<em>Aenēās umbrīs patriae nōmen nārrat.</em>', o:['Aeneas and the shades tell the name of the homeland.','The shades tell Aeneas the name of the homeland.','Aeneas tells the shades the name of the homeland.','Aeneas tells the name of the homeland\'s shades.'], a:2},
+    {t:'Translation', q:'How would you say "Charon gives a coin to the soul" in Latin?', o:['<em>Charon animam nummum dat.</em>','<em>Charon animae nummum dat.</em>','<em>Charon animārum nummum dat.</em>','<em>Charon animīs nummum dant.</em>'], a:1},
+    {t:'Translation', q:'<em>Plūtō umbrīs vītam nōn dat.</em>', o:['The shades do not give life to Pluto.','Pluto does not give the shades life.','Pluto gives life to the shades.','Pluto does not give Vita to the shades.'], a:1},
+    {t:'Translation', q:'<em>Cerberus animīs portam mōnstrat.</em>', o:['Cerberus guards the souls at the gate.','The souls show Cerberus the gate.','Cerberus shows the souls the gate.','The gate shows Cerberus the souls.'], a:2},
+    {t:'Grammar Review', q:'What is the genitive singular ending of 1st declension nouns? (Review from M05)', o:['<em>-am</em>','<em>-ae</em>','<em>-ā</em>','<em>-ārum</em>'], a:1},
+    {t:'Grammar Review', q:'The genitive case primarily marks — (Review from M05)', o:['the indirect object','the direct object','possession or description','the subject'], a:2},
+    {t:'Grammar Review', q:'What does <em>umbrae</em> mean in <em>nōmen umbrae</em>? (Review: genitive)', o:['to the shade','the shade (subject)','of the shade','the shades (plural subject)'], a:2},
+    {t:'Grammar Review', q:'The accusative singular of <em>umbra</em> is —', o:['<em>umbrae</em>','<em>umbram</em>','<em>umbrō</em>','<em>umbrīs</em>'], a:1},
+    {t:'Grammar Review', q:'What is the nominative plural of <em>anima</em>?', o:['<em>animam</em>','<em>animārum</em>','<em>animae</em>','<em>animīs</em>'], a:2},
+    {t:'Grammar Review', q:'<em>Cerberus Tartarī canis est.</em> — <em>Tartarī</em> is in the — case.', o:['dative singular','nominative plural','genitive singular','accusative singular'], a:2}
+  ];
+
+  var queue=[],qi=0,correct=0,answered=0,timeLeft=GAME_SECONDS,timer=null,locked=false,player='',curAnswer=0,gameOver=false,lastResult=null,miss={},curTotal=GAME_SECONDS,accom=false;
+  function $(id){return document.getElementById(id);}
+  function show(id){['screen-start','screen-play','screen-results','screen-rankup'].forEach(function(s){$(s).classList.toggle('active',s===id);});}
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function buildQueue(){return shuffle(POOL.slice()).slice(0,N_QUESTIONS);}
+  function getAttempts(){return parseInt(localStorage.getItem(STORE+'attempts')||'0',10);}
+  function getBest(){return parseInt(localStorage.getItem(STORE+'best')||'0',10);}
+  function fmt(s){var m=Math.floor(s/60),ss=s%60;return m+':'+(ss<10?'0':'')+ss;}
+  function rankFor(g){ if(g>=90)return'imperator'; if(g>=80)return'tribunus'; if(g>=70)return'centurio'; if(g>=60)return'miles'; return'tiro'; }
+
+  function renderLegend(){
+    var html=''; ORDER.forEach(function(k){ var r=RANKS[k];
+      html+='<div class="lrow">'+disc(k,52)+'<div class="ltext"><b>'+r.full+' ('+r.band+')</b><br>'+r.desc+'</div></div>'; });
+    $('legend').innerHTML=html;
+  }
+  function refreshAttemptMsg(){
+    var used=getAttempts(),el=$('attempts-left');
+    if(used>=MAX_ATTEMPTS){ el.innerHTML='You have used all '+MAX_ATTEMPTS+' attempts. Your recorded score is your best: <strong>'+getBest()+'/100</strong>. You may still download your results sheet.'; $('btn-begin').disabled=true; }
+    else{ el.innerHTML='Attempts used: <strong>'+used+'</strong> of '+MAX_ATTEMPTS+'. Best score so far: <strong>'+getBest()+'/100</strong>.'; $('btn-begin').disabled=false; }
+  }
+
+  function startGame(){
+    player=($('player').value||'').trim();
+    if(!player){ $('player').focus(); $('player').style.borderColor='#E23A33'; return; }
+    if(getAttempts()>=MAX_ATTEMPTS) return;
+    accom = $('accom') ? $('accom').checked : false;
+    curTotal = accom ? Math.round(GAME_SECONDS*1.5) : GAME_SECONDS;
+    queue=buildQueue(); qi=0; correct=0; answered=0; timeLeft=curTotal; locked=false; gameOver=false; miss={};
+    $('hud-correct').textContent='0'; $('hud-prog').textContent='1/'+N_QUESTIONS; $('hud-time').textContent=fmt(timeLeft); $('hud-time').className='';
+    $('tbar').style.width='100%'; $('tbar').style.background='linear-gradient(90deg,#22c55e,#16a34a)';
+    show('screen-play'); renderQ(); timer=setInterval(tick,1000);
+  }
+  function tick(){
+    timeLeft--; $('hud-time').textContent=fmt(Math.max(0,timeLeft));
+    var pct=Math.max(0,timeLeft)/curTotal; $('tbar').style.width=(pct*100)+'%';
+    $('tbar').style.background = pct>0.5?'linear-gradient(90deg,#22c55e,#16a34a)':(pct>0.2?'linear-gradient(90deg,#FFC23D,#E69A12)':'linear-gradient(90deg,#E23A33,#C02922)');
+    $('hud-time').className = pct<=0.2?'warn':'';
+    if(timeLeft<=0) endGame();
+  }
+  function renderQ(){
+    if(qi>=queue.length){ endGame(); return; }
+    locked=false; var item=queue[qi];
+    $('hud-prog').textContent=(qi+1)+'/'+N_QUESTIONS;
+    $('q-type').textContent=item.t; $('q-text').innerHTML=item.q;
+    $('q-flash').textContent=''; $('q-flash').className='flash';
+    var opts=$('q-opts'); opts.innerHTML='';
+    var order=item.o.map(function(_,i){return i;}); shuffle(order); curAnswer=order.indexOf(item.a);
+    order.forEach(function(orig,pos){ var b=document.createElement('button'); b.className='opt'; b.innerHTML=item.o[orig];
+      b.onclick=function(){answer(pos,b);}; opts.appendChild(b); });
+  }
+  function answer(pos,btn){
+    if(locked)return; locked=true; var item=queue[qi]; answered++;
+    var right=(pos===curAnswer);
+    if(right){ correct++; btn.className='opt right'; $('q-flash').textContent='Recte! (Correct)'; $('q-flash').className='flash ok'; }
+    else{ btn.className='opt wrong'; $('q-opts').children[curAnswer].className='opt right';
+      $('q-flash').textContent='The answer was: '+item.o[item.a]; $('q-flash').className='flash no'; miss[item.t]=(miss[item.t]||0)+1; }
+    $('hud-correct').textContent=correct; qi++;
+    setTimeout(function(){ if(!gameOver&&timeLeft>0) renderQ(); }, right?450:1050);
+  }
+  function computeResult(){
+    var accR=Math.round((correct/N_QUESTIONS)*90);
+    var speedFrac=Math.max(0,Math.min(1,timeLeft/(30*(curTotal/GAME_SECONDS))));
+    var bonusR=Math.round(10*speedFrac*(correct/N_QUESTIONS));
+    return {total:Math.min(100,accR+bonusR), accR:accR, bonusR:bonusR};
+  }
+  function suggestion(){
+    var worst=null,n=0; for(var k in miss){ if(miss[k]>n){ n=miss[k]; worst=k; } }
+    if(!worst) return 'You answered everything you reached correctly. You are ready to move ahead to Module 3 with confidence.';
+    return 'Suggested next focus: '+(SUGGEST[worst]||('review '+worst))+'.';
+  }
+  function makeCode(g){
+    var d=new Date(), ymd=(''+d.getFullYear()).slice(2)+('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
+    var sum=0,s=player.toUpperCase(); for(var i=0;i<s.length;i++){sum=(sum+s.charCodeAt(i)*(i+1))%1000;}
+    return 'M7-'+g+'-'+answered+correct+'-'+ymd+'-'+('00'+sum).slice(-3)+(accom?'-A':'');
+  }
+  function confetti(n, colorSet){
+    var c=$('confetti'); if(!c.getContext) return; var ctx=c.getContext('2d');
+    c.width=window.innerWidth; c.height=window.innerHeight;
+    var cols=colorSet||['#FFC23D','#E23A33','#1FC1A8','#5AA0E6','#8A4FD6','#22c55e'];
+    var P=[]; for(var i=0;i<n;i++){ P.push({x:Math.random()*c.width, y:-20-Math.random()*c.height*0.4, w:7+Math.random()*8, h:9+Math.random()*9, col:cols[i%cols.length], vy:2.2+Math.random()*3.2, vx:-1.4+Math.random()*2.8, rot:Math.random()*6.28, vr:-0.2+Math.random()*0.4}); }
+    var DUR=n>300?4500:2800;
+    var start=null;
+    function frame(ts){ if(!start)start=ts; var e=ts-start; ctx.clearRect(0,0,c.width,c.height);
+      for(var i=0;i<P.length;i++){ var p=P[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.02; p.rot+=p.vr;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot); ctx.fillStyle=p.col; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore(); }
+      if(e<DUR) requestAnimationFrame(frame); else ctx.clearRect(0,0,c.width,c.height); }
+    requestAnimationFrame(frame);
+  }
+
+  function endGame(){
+    if(gameOver)return; gameOver=true; clearInterval(timer);
+    var res=computeResult(), g=res.total;
+    var prevBest=getBest(), isFirst=(getAttempts()===0);
+    var used=getAttempts()+1;
+    localStorage.setItem(STORE+'attempts',used);
+    var best=Math.max(prevBest,g);
+    localStorage.setItem(STORE+'best',best);
+
+    // ── SCORM: report score after every attempt; finalise on last attempt ──
+    if(scormActive){
+      if(used>=MAX_ATTEMPTS){ SCORM12.finish(best); } else { SCORM12.set(best); }
+    }
+
+    var key=rankFor(best), prevKey=isFirst?null:rankFor(prevBest), code=makeCode(g), tip=suggestion();
+    var isRankUp=!isFirst && RANKS[key].lvl > RANKS[prevKey].lvl;
+    var isNewBest=isFirst || g>prevBest;
+
+    lastResult={grade:g,best:best,acc:answered?Math.round(correct/answered*100):0,correct:correct,answered:answered,key:key,code:code,used:used,accR:res.accR,bonusR:res.bonusR,tip:tip,accom:accom,total:curTotal};
+
+    // ── Build results screen ──
+    var C=490, off=C*(1-best/100); var fg=$('ring-fg'); fg.setAttribute('stroke-dashoffset',off); fg.setAttribute('stroke',RANKS[key].c2);
+    var VICTORY={imperator:'&#127881;&#127881; Victoria Maxima &mdash; Imperātor!',tribunus:'&#127881; Victoria! Tribūnus!',centurio:'&#127881; Victoria! Centuriō!',miles:'&#9876;&#65039; Mīles &mdash; you hold the line!',tiro:'&#9876;&#65039; Ad Astra &mdash; keep climbing!'};
+    $('r-victory').innerHTML=VICTORY[key];
+    $('r-grade').textContent=best;
+    $('r-badge').innerHTML='<span id="r-badge-inner">'+badge(key,128)+'</span>';
+    if(key==='imperator') setTimeout(function(){ var bi=$('r-badge-inner'); if(bi) bi.className='glow-imp'; }, 400);
+    $('r-rankdesc').innerHTML='You earned the rank of <strong>'+RANKS[key].full+'</strong>. '+RANKS[key].desc;
+    $('r-correct').textContent=correct;
+    $('r-acc').textContent=(answered?Math.round(correct/answered*100):0)+'%';
+    $('r-this').textContent=g;
+    $('r-att').textContent=used+'/'+MAX_ATTEMPTS;
+    $('r-breakdown').innerHTML='This attempt: <strong>'+res.accR+'</strong> accuracy + <strong>'+res.bonusR+'</strong> speed bonus = <strong>'+g+'</strong>/100.';
+    $('r-suggest').innerHTML='&#128218; '+tip;
+    $('r-accom').innerHTML=accom?'&#9201;&#65039; Extended-time accommodation (IEP/504) applied: '+fmt(curTotal)+' on the clock.':'';
+
+    // ── Personal best banner ──
+    var pbEl=$('r-pb');
+    if(pbEl){
+      if(isFirst){ pbEl.className='pb-banner pb-first'; pbEl.innerHTML='&#127981; First attempt &mdash; this score is now your personal best.'; }
+      else if(isNewBest){ pbEl.className='pb-banner pb-new'; pbEl.innerHTML='&#9650; New personal best &mdash; up from '+prevBest+'/100 ('+RANKS[prevKey].full+')'; }
+      else if(g===prevBest){ pbEl.className='pb-banner pb-same'; pbEl.innerHTML='Matched your personal best: '+prevBest+'/100'; }
+      else { pbEl.className='pb-banner pb-below'; pbEl.innerHTML='Your best remains <strong>'+prevBest+'/100</strong> ('+RANKS[prevKey].full+') &mdash; keep going.'; }
+      pbEl.style.display='block';
+    }
+
+    // ── Results screen rank tint ──
+    $('screen-results').className='screen rank-'+key;
+
+    var left=MAX_ATTEMPTS-used;
+
+    // ── SCORM: update results UI ──
+    if(scormActive){
+      $('fallback-block').style.display='none';
+      var banner=$('scorm-banner'); banner.style.display='block';
+      if(used>=MAX_ATTEMPTS){
+        banner.className='scorm-banner ok';
+        banner.innerHTML='&#10003; Score submitted to Canvas: <strong>'+best+'/100</strong>. Your grade has been recorded automatically.';
+        $('scorm-again-wrap').style.display='none';
+      } else {
+        banner.className='scorm-banner pending';
+        banner.innerHTML='&#128260; Score updated in Canvas: <strong>'+best+'/100</strong>. You have <strong>'+left+'</strong> attempt'+(left===1?'':'s')+' left &mdash; play again to improve it.';
+        $('scorm-again-wrap').style.display='block';
+      }
+    } else {
+      $('fallback-block').style.display='block';
+      $('scorm-banner').style.display='none';
+      $('scorm-again-wrap').style.display='none';
+      $('r-code').textContent=code;
+      var attemptLeft=left>0?('You have <strong>'+left+'</strong> attempt'+(left===1?'':'s')+' left. Your recorded score is always your <strong>best of 3</strong> ('+best+'/100).'):('All 3 attempts used. Your final recorded score is <strong>'+best+'/100</strong>.');
+      $('r-attemptmsg').innerHTML=attemptLeft;
+      $('btn-again').style.display=left>0?'inline-block':'none';
+    }
+
+    // ── Celebration ──
+    function showResults(){
+      show('screen-results');
+      var n=key==='imperator'?520:(70+RANKS[key].lvl*45);
+      var cols=key==='imperator'?['#FFC23D','#E69A12','#fff7cc','#c9a7ff','#8A4FD6','#FFC23D']:null;
+      confetti(n, cols);
+      if(key==='imperator') playFanfare();
+    }
+
+    if(isRankUp){ showRankUp(prevKey, key, showResults); } else { showResults(); }
+  }
+
+  function downloadPDF(){
+    if(!lastResult)return; var r=lastResult, d=new Date(), R=RANKS[r.key], win=window.open('','_blank');
+    if(!win){ alert('Please allow pop-ups, then press Download again to get your results sheet.'); return; }
+    var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>Latin Module 7 Results</title><style>'+
+      'body{font-family:Georgia,serif;color:#22293a;margin:0;padding:40px;background:#fff;}'+
+      '.cert{max-width:620px;margin:0 auto;border:3px solid #FFC23D;border-radius:18px;padding:34px 40px;text-align:center;}'+
+      '.ey{font-size:12px;letter-spacing:1.5px;color:#C02922;}h1{color:#0E1C42;font-size:23px;margin:6px 0 14px;}'+
+      '.disc{width:108px;height:108px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,'+R.c1+','+R.c2+');box-shadow:0 8px 18px rgba(0,0,0,.2);}'+
+      '.disc .in{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:44px;}'+
+      '.rank{font-size:22px;color:#0E1C42;letter-spacing:1.5px;text-transform:uppercase;}'+
+      '.g{font-size:52px;color:#C02922;margin:6px 0;}table{margin:12px auto;border-collapse:collapse;}td{padding:6px 18px;font-size:15.5px;}td.l{color:#7a8190;text-align:right;}td.v{font-weight:bold;text-align:left;}'+
+      '.tip{background:#eef7ff;border:1px solid #cfe4f5;border-radius:10px;padding:10px 14px;margin:12px auto;max-width:480px;font-size:14px;color:#15506f;}'+
+      '.code{font-family:monospace;background:#f7f8fc;border:1px dashed #E69A12;padding:6px 12px;display:inline-block;color:#C02922;}'+
+      '.ft{font-size:12px;color:#aaa;margin-top:16px;}@media print{.noprint{display:none;}}</style></head><body><div class="cert">'+
+      '<div class="ey">OPTIMA ACADEMY ONLINE &middot; BEGINNING LATIN</div>'+
+      '<h1>Module 7 Timed Practice: Results</h1>'+
+      '<div class="disc"><div class="in">'+R.emoji+'</div></div><div class="rank">'+R.full+'</div>'+
+      '<div class="g">'+r.best+'<span style="font-size:22px;color:#aaa;">/100</span></div>'+
+      '<table>'+
+      '<tr><td class="l">Student</td><td class="v">'+player.replace(/[<>]/g,'')+'</td></tr>'+
+      '<tr><td class="l">Best score (of 3)</td><td class="v">'+r.best+' / 100</td></tr>'+
+      '<tr><td class="l">This attempt</td><td class="v">'+r.grade+' / 100</td></tr>'+
+      '<tr><td class="l">Correct</td><td class="v">'+r.correct+' of '+r.answered+' answered</td></tr>'+
+      '<tr><td class="l">Accuracy</td><td class="v">'+r.acc+'%</td></tr>'+
+      '<tr><td class="l">Accuracy points</td><td class="v">'+r.accR+' / 90</td></tr>'+
+      '<tr><td class="l">Speed bonus</td><td class="v">+'+r.bonusR+' / 10</td></tr>'+
+      '<tr><td class="l">Attempts used</td><td class="v">'+r.used+' of 3</td></tr>'+
+      '<tr><td class="l">Date</td><td class="v">'+d.toLocaleDateString()+'</td></tr>'+
+      (r.accom ? '<tr><td class="l">Accommodation</td><td class="v">Extended time (IEP/504), '+r.total+'s</td></tr>' : '')+
+      '</table><div class="tip">&#128218; '+r.tip+'</div>'+
+      (scormActive ? '<div class="ft">&#10003; Score submitted to Canvas automatically.</div>' :
+        '<div>Verification code</div><div class="code">'+r.code+'</div>'+
+        '<div class="ft">Upload this sheet to the Module 7 Timed Practice assignment in Canvas. Your teacher records your best score.</div>')+
+      '<button class="noprint" onclick="window.print()" style="margin-top:18px;padding:10px 20px;font-size:15px;border-radius:8px;cursor:pointer;">Save / Print as PDF</button>'+
+      '</div><script>setTimeout(function(){window.print();},450);<\/script></body></html>';
+    win.document.write(html); win.document.close();
+  }
+
+  // ── Rank-up promotion overlay ──
+  function showRankUp(prevKey, newKey, cb){
+    var R=RANKS[newKey], Rp=RANKS[prevKey];
+    var stars=newKey==='imperator'?'&#127881;&#127881;&#127881;':(RANKS[newKey].lvl>=4?'&#127881;&#127881;':'&#127881;');
+    $('ru-stars').innerHTML=stars;
+    $('ru-badge').innerHTML=badge(newKey,140);
+    $('ru-rank').textContent=R.full.toUpperCase();
+    $('ru-desc').textContent=R.desc;
+    $('ru-prev').innerHTML='Advanced from <strong style="color:rgba(255,255,255,.65);">'+Rp.full+'</strong>';
+    show('screen-rankup');
+    confetti(newKey==='imperator'?300:120, newKey==='imperator'?['#FFC23D','#E69A12','#fff7cc','#8A4FD6']:null);
+    var advanced=false;
+    function advance(){ if(advanced)return; advanced=true; document.removeEventListener('click',advance); document.removeEventListener('touchend',advance); cb(); }
+    document.addEventListener('click',advance);
+    document.addEventListener('touchend',advance);
+    setTimeout(advance,3200);
+  }
+
+  // ── Imperātor fanfare (Web Audio API, no external files) ──
+  function playFanfare(){
+    try{
+      var ctx=new (window.AudioContext||window.webkitAudioContext)();
+      var notes=[
+        {f:523.25,t:0,   d:.13,v:.2},
+        {f:659.25,t:.13, d:.13,v:.2},
+        {f:783.99,t:.26, d:.13,v:.2},
+        {f:1046.5, t:.39, d:.55,v:.22},
+        {f:783.99, t:.42, d:.13,v:.1},
+        {f:1318.5, t:.52, d:.5, v:.18}
+      ];
+      var base=ctx.currentTime+0.05;
+      notes.forEach(function(n){
+        var osc=ctx.createOscillator(), gain=ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.frequency.value=n.f; osc.type='triangle';
+        var s=base+n.t;
+        gain.gain.setValueAtTime(0,s);
+        gain.gain.linearRampToValueAtTime(n.v,s+0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001,s+n.d);
+        osc.start(s); osc.stop(s+n.d+0.05);
+      });
+    }catch(e){}
+  }
+
+  // ── Random Roman name generator ──
+  var ROMAN_NAMES={
+    praenomina:['Gaius','Marcus','Lucius','Publius','Quintus','Titus','Sextus','Aulus','Gnaeus','Manius'],
+    nomina:['Aemilius','Claudius','Cornelius','Fabius','Julius','Licinius','Pompeius','Tullius','Valerius','Antonius','Porcius','Servilius','Hortensius','Junius'],
+    cognomina:['Maximus','Magnus','Felix','Longus','Rufus','Crassus','Cicero','Scipio','Sulla','Flaccus','Lepidus','Strabo','Paullus','Calvus','Pulcher','Nero']
+  };
+  function suggestRomanName(){
+    function pick(a){return a[Math.floor(Math.random()*a.length)];}
+    $('player').value=pick(ROMAN_NAMES.praenomina)+' '+pick(ROMAN_NAMES.nomina)+' '+pick(ROMAN_NAMES.cognomina);
+    $('player').style.borderColor='var(--gold)';
+    setTimeout(function(){$('player').style.borderColor='#e8ebf3';},800);
+  }
+
+  $('btn-begin').onclick=startGame;
+  $('btn-suggest-name').onclick=suggestRomanName;
+  $('btn-again').onclick=function(){ refreshAttemptMsg(); show('screen-start'); };
+  $('btn-again-scorm').onclick=function(){ refreshAttemptMsg(); show('screen-start'); };
+  $('btn-pdf').onclick=downloadPDF;
+  $('player').addEventListener('input',function(){ this.style.borderColor='#e8ebf3'; });
+
+  // ── SCORM: safety-net finish if student closes window mid-session ──
+  window.addEventListener('beforeunload', function(){
+    if(scormActive && !SCORM12.isDone()){
+      SCORM12.finish(getBest());
+    }
+  });
+
+  renderLegend(); refreshAttemptMsg();
+})();
+</script>
+</body>
+</html>

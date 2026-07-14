@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 16.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 16</div>
+        <div style="font-size: 12px; color: #666;">Imperative &amp; Vocative</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 16.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The imperative mood</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Art of Roman Rhetoric</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 16.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> How to Give an Order</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 42 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">One order, two sizes: to one person, and to a group. Plus four short verbs that break the rule.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">The imperative is one of the friendliest forms in Latin, because you already have everything you need to build it. Command <strong>one person</strong>? Take the verb's present stem. Command <strong>a group</strong>? Add <span class="lat">-te</span>. That's the whole rule &mdash; and it works across the first, second, and third conjugations you've been studying all semester. At the end you'll meet four everyday verbs with a clipped singular: <span class="lat">dīc, dūc, fac, fer</span>.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form the <em>singular</em> imperative (to one person) from a verb's present stem.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form the <em>plural</em> imperative (to a group) by adding <span class="lat">-te</span>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recall the four irregular short singulars: <span class="lat">dīc, dūc, fac, fer</span>.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; RECALL <span class="pill-time">4 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Yesterday's idea</h3>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Without scrolling back: what does a verb in the <em>imperative</em> mood do that a normal (indicative) verb doesn't?</div>
+            <div class="widget-options">
+                <button data-response="Yes — the imperative gives an order rather than reporting a fact. 'Pugnat' = 'he fights'; 'pugnā!' = 'fight!' Today you build that command form for every verb you know.">It gives an order instead of stating a fact</button>
+                <button data-response="Close — that's the vocative case (calling someone by name), which you'll build tomorrow. The imperative is the verb form that gives the order itself. Both team up in a command like 'Mārce, vidē!'">It names the person being spoken to</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; COMMANDING ONE PERSON <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The singular: just take the stem</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">To order <strong>one person</strong>, take the verb's <strong>present stem</strong> &mdash; the infinitive with its <span class="lat">-re</span> dropped. For the first and second conjugations, that's all there is to it. The third conjugation keeps a short <span class="lat">-e</span>.</p>
+        <table class="gtable">
+            <thead><tr><th>Conjugation</th><th>Infinitive</th><th>Singular command</th><th>Meaning</th></tr></thead>
+            <tbody>
+                <tr><td>1st</td><td><span class="lat">amāre</span></td><td><span class="lat">am<span class="ending">ā</span></span></td><td>love!</td></tr>
+                <tr><td>1st</td><td><span class="lat">portāre</span></td><td><span class="lat">port<span class="ending">ā</span></span></td><td>carry!</td></tr>
+                <tr><td>2nd</td><td><span class="lat">monēre</span></td><td><span class="lat">mon<span class="ending">ē</span></span></td><td>warn!</td></tr>
+                <tr><td>2nd</td><td><span class="lat">vidēre</span></td><td><span class="lat">vid<span class="ending">ē</span></span></td><td>see! / look!</td></tr>
+                <tr><td>3rd</td><td><span class="lat">mittere</span></td><td><span class="lat">mitt<span class="ending">e</span></span></td><td>send!</td></tr>
+                <tr><td>3rd</td><td><span class="lat">scrībere</span></td><td><span class="lat">scrīb<span class="ending">e</span></span></td><td>write!</td></tr>
+            </tbody>
+        </table>
+        <div style="background:#F4F9FC;border:1px solid #D0D9E8;border-left:4px solid #2196D0;border-radius:6px;padding:12px 16px;margin:12px 0 0;">
+            <div style="font-size:11px;color:#1B6A94;letter-spacing:.3px;margin-bottom:6px;">&#128161; NOTICE THE VOWEL</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The singular command wears the family's signature vowel: long <span class="lat">ā</span> for the first conjugation (<span class="lat">amā</span>), long <span class="lat">ē</span> for the second (<span class="lat">monē</span>), and a short <span class="lat">e</span> for the third (<span class="lat">mitte</span>). Same idea you learned with the present tense &mdash; the stem vowel tells you the family.</p>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128204; PART 3 &middot; COMMANDING A GROUP + FOUR REBELS <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The plural: add <span class="lat">-te</span></h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">To order <strong>a group</strong>, add <span class="lat">-te</span> to the singular. (In the third conjugation the short <span class="lat">e</span> becomes an <span class="lat">i</span> before the ending: <span class="lat">mitte</span> &rarr; <span class="lat">mittite</span>.)</p>
+        <table class="gtable">
+            <thead><tr><th>Conjugation</th><th>Singular (one person)</th><th>Plural (a group)</th></tr></thead>
+            <tbody>
+                <tr><td>1st &mdash; <span class="lat">amāre</span></td><td><span class="lat">amā</span></td><td><span class="lat">amā<span class="ending">te</span></span></td></tr>
+                <tr><td>1st &mdash; <span class="lat">portāre</span></td><td><span class="lat">portā</span></td><td><span class="lat">portā<span class="ending">te</span></span></td></tr>
+                <tr><td>2nd &mdash; <span class="lat">monēre</span></td><td><span class="lat">monē</span></td><td><span class="lat">monē<span class="ending">te</span></span></td></tr>
+                <tr><td>3rd &mdash; <span class="lat">mittere</span></td><td><span class="lat">mitte</span></td><td><span class="lat">mitt<span class="ending">ite</span></span></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px;">Four common third-conjugation verbs clip their singular command down to nothing but the bare stem &mdash; no final vowel at all. Their plurals, though, are perfectly regular.</p>
+        <div class="etym-box">
+            <div class="lbl">&#9888;&#65039; THE FOUR IRREGULAR SINGULARS &mdash; MEMORIZE THESE</div>
+            <table class="gtable" style="margin:6px 0 0;">
+                <thead><tr><th>Verb</th><th>Singular</th><th>Plural</th><th>Meaning</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="lat">dīcere</span></td><td><span class="lat"><span class="ending">dīc</span></span></td><td><span class="lat">dīcite</span></td><td>say! / speak!</td></tr>
+                    <tr><td><span class="lat">dūcere</span></td><td><span class="lat"><span class="ending">dūc</span></span></td><td><span class="lat">dūcite</span></td><td>lead!</td></tr>
+                    <tr><td><span class="lat">facere</span></td><td><span class="lat"><span class="ending">fac</span></span></td><td><span class="lat">facite</span></td><td>do! / make!</td></tr>
+                    <tr><td><span class="lat">ferre</span></td><td><span class="lat"><span class="ending">fer</span></span></td><td><span class="lat">ferte</span></td><td>carry! / bring!</td></tr>
+                </tbody>
+            </table>
+            <p style="font-size:15px;color:#1a2340;line-height:1.55;margin:8px 0 0;">A tidy memory hook: <em>&ldquo;dīc, dūc, fac, and fer &mdash; should have an <span class="lat">-e</span>, but it isn't there.&rdquo;</em></p>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 4 &middot; BUILD THE COMMAND <span class="pill-time">16 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five reps &mdash; forming singulars, forming plurals, and catching the four rebels. Keep the charts above in view; the goal is to make the command form automatic.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; command one person</div>
+            <div class="widget-question">Order <strong>one person</strong> to warn, using <span class="lat">monēre</span>. Which form?</div>
+            <div class="widget-options">
+                <button data-correct="true"><span class="lat">monē</span></button>
+                <button data-correct="false"><span class="lat">monēte</span></button>
+                <button data-correct="false"><span class="lat">monet</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; command a group</div>
+            <div class="widget-question">Order <strong>a group</strong> to carry, using <span class="lat">portāre</span>. Which form?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">portā</span></button>
+                <button data-correct="true"><span class="lat">portāte</span></button>
+                <button data-correct="false"><span class="lat">portant</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; third conjugation</div>
+            <div class="widget-question">Give the <strong>singular</strong> command of <span class="lat">mittere</span> (&ldquo;send!&rdquo;).</div>
+            <div class="widget-options">
+                <button data-correct="true"><span class="lat">mitte</span></button>
+                <button data-correct="false"><span class="lat">mittite</span></button>
+                <button data-correct="false"><span class="lat">mittis</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; catch the rebel</div>
+            <div class="widget-question">Which is the correct <strong>singular</strong> command &ldquo;lead!&rdquo; from <span class="lat">dūcere</span>?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">dūce</span></button>
+                <button data-correct="true"><span class="lat">dūc</span></button>
+                <button data-correct="false"><span class="lat">dūcit</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; command a group</div>
+            <div class="widget-question">Tell <strong>a group</strong> to speak, using <span class="lat">dīcere</span>. Which form?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">dīc</span></button>
+                <button data-correct="false"><span class="lat">dīce</span></button>
+                <button data-correct="true"><span class="lat">dīcite</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Produce both forms yourself: give the <em>singular</em> and the <em>plural</em> command for &ldquo;carry!&rdquo; (<span class="lat">portāre</span>). Say them, then reveal.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body"><strong><span class="lat">portā</span></strong> (to one person) and <strong><span class="lat">portāte</span></strong> (to a group). Stem <span class="lat">portā-</span> for the singular; add <span class="lat">-te</span> for the plural. Same move for every first-conjugation verb.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 16.03</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Now that you can give an order, tomorrow you learn to <em>address</em> the person you're ordering &mdash; the vocative case &mdash; and how to say &ldquo;don't&rdquo; with <span class="lat">nōlī</span>.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then say aloud the singular <em>and</em> plural command for three verbs &mdash; <span class="lat">amāre</span>, <span class="lat">vidēre</span>, <span class="lat">scrībere</span> &mdash; and recite the four rebels: <span class="lat">dīc, dūc, fac, fer</span>.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; YOU CAN COMMAND NOW</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Stem for one, <span class="lat">-te</span> for many, and four rebels to remember. That's the imperative. Tomorrow you learn who to point it at.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 16.02 &middot; The imperative mood</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — stem for one person, add -te for a group (and watch the four rebels).'
+        : 'Not quite — check the singular/plural charts above (and remember dīc, dūc, fac, fer), then try once more.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

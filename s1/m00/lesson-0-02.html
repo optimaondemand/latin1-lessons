@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 0.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 00</div>
+        <div style="font-size: 12px; color: #666;">Pronunciation &amp; the Alphabet</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 0.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Vowels, length &amp; macrons</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Journey of Aeneas</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 0.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Five Vowels, Two Lengths &mdash; and the Little Line That Matters</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Latin has only five vowel letters &mdash; but each one hides two sounds, and one tiny mark tells you which.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">In English, vowels are chaos: the &ldquo;a&rdquo; in <em>cat, car, cake,</em> and <em>call</em> are all different. Latin is refreshingly honest. Every vowel has just <strong>two settings &mdash; long and short</strong> &mdash; and the sound stays steady. The mark that flags a long vowel is the <strong>macron</strong>, the little bar you see over <span class="lat">&#257;, &#275;, &#299;, &#333;, &#363;</span>. It's not decoration: it can change a word's meaning and decide where you put the stress. Learn to read it and you'll pronounce Latin the way the Romans did.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> give the long and short sound of each of the five Latin vowels.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what a macron marks and why vowel length matters.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell two words apart by their vowel length, like <span class="lat">malus</span> and <span class="lat">m&#257;lus</span>.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; WARM-UP <span class="pill-time">4 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A quick recall</h3>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Yesterday you learned the letter shapes. Before we add sound: what do you already know about English vowels that might <em>not</em> carry over to Latin?</div>
+            <div class="widget-options">
+                <button data-response="Exactly the trap to avoid. In English, one vowel letter can make many sounds. Latin is the opposite: each vowel has just a long and a short version, and the quality stays steady. That consistency is a gift.">English vowels change sound constantly</button>
+                <button data-response="A good instinct. English does pile on silent letters and spellings that lie. Latin vowels, by contrast, are pronounced honestly &mdash; if you see it, you say it, either long or short.">English spelling is full of silent letters</button>
+                <button data-response="Fair to feel unsure &mdash; that's what today fixes. The key idea: Latin has five vowels, each with a clean long and short sound. No surprises like English's four different 'a' sounds.">I'm not sure yet</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE FIVE VOWELS <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Each vowel, long and short</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A <strong>long</strong> vowel is simply held about twice as long as a <strong>short</strong> one, and it usually keeps a pure, clean quality. Since there is no audio here, learn each sound by its English comparison word &mdash; say the English word aloud and hold onto that vowel.</p>
+        <table class="gtable">
+            <thead><tr><th>Vowel</th><th>Long &mdash; as in&hellip;</th><th>Short &mdash; as in&hellip;</th></tr></thead>
+            <tbody>
+                <tr><td><span class="lat">a / &#257;</span></td><td><span class="lat">&#257;</span> like the <em>a</em> in <strong>father</strong> (<span class="lat">m&#257;ter</span>)</td><td><span class="lat">a</span> like the <em>a</em> in <strong>aha</strong>, clipped (<span class="lat">aqua</span>)</td></tr>
+                <tr><td><span class="lat">e / &#275;</span></td><td><span class="lat">&#275;</span> like the <em>ey</em> in <strong>they</strong> (<span class="lat">t&#275;</span>)</td><td><span class="lat">e</span> like the <em>e</em> in <strong>pet</strong> (<span class="lat">et</span>)</td></tr>
+                <tr><td><span class="lat">i / &#299;</span></td><td><span class="lat">&#299;</span> like the <em>i</em> in <strong>machine</strong> (<span class="lat">&#299;nsula</span>)</td><td><span class="lat">i</span> like the <em>i</em> in <strong>pin</strong> (<span class="lat">in</span>)</td></tr>
+                <tr><td><span class="lat">o / &#333;</span></td><td><span class="lat">&#333;</span> like the <em>o</em> in <strong>holy</strong> (<span class="lat">R&#333;ma</span>)</td><td><span class="lat">o</span> like the <em>o</em> in <strong>off</strong> (<span class="lat">bonus</span>)</td></tr>
+                <tr><td><span class="lat">u / &#363;</span></td><td><span class="lat">&#363;</span> like the <em>oo</em> in <strong>rude</strong> (<span class="lat">l&#363;na</span>)</td><td><span class="lat">u</span> like the <em>u</em> in <strong>put</strong> (<span class="lat">sub</span>)</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 0;">Notice how tidy that is: five letters, ten sounds, and each one steady. There is no silent <em>e</em>, no &ldquo;magic&rdquo; vowels, no exceptions to memorize. What you see, you say.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128204; PART 3 &middot; THE MACRON <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Why the little line earns its keep</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The bar over a vowel &mdash; <span class="lat">&#257;, &#275;, &#299;, &#333;, &#363;</span> &mdash; is called a <strong>macron</strong> (from Greek <em>makros</em>, &ldquo;long&rdquo;). It marks the vowel as <strong>long</strong>. A vowel with no macron is <strong>short</strong>. The Romans didn't usually write macrons, but textbooks add them so you can learn the correct length &mdash; and length genuinely matters for two reasons:</p>
+        <div class="contrast">
+            <div class="col a">
+                <h4>1 &middot; It can change the meaning</h4>
+                <div style="font-size:16px;color:#1a2340;line-height:1.6;">Two words can look identical except for one macron and mean completely different things:<br><br><span class="lat">malus</span> = bad, evil<br><span class="lat">m&#257;lus</span> = apple tree<br><br><span class="lat">liber</span> = book<br><span class="lat">l&#299;ber</span> = free</div>
+            </div>
+            <div class="col b">
+                <h4>2 &middot; It decides the stress</h4>
+                <div style="font-size:16px;color:#1a2340;line-height:1.6;">Whether a vowel is long or short helps determine which syllable you emphasize when you say the word. That's the whole story of Lesson 0.04 &mdash; so reading macrons now sets you up for the stress rule later.</div>
+            </div>
+        </div>
+        <div class="etym-box">
+            <div class="lbl">&#127793; A WORD ABOUT MACRONS</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">You've met the word &ldquo;macron&rdquo; before without knowing it: the same Greek root <em>makros</em> gives English <strong>macro</strong>economics (the &ldquo;large&rdquo; view) and a <strong>macro</strong> lens. In Latin, the macron is your signal to hold the vowel long.</p>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 4 &middot; MAKE IT STICK <span class="pill-time">16 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five reps &mdash; some read a macron, some match a vowel to its English sound. Keep the vowel chart above in view; the goal is to make length automatic. Wrong answers give a hint; use Reset to try again.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; what the mark means</div>
+            <div class="widget-question">The macron over <span class="lat">&#257;</span> tells you the vowel is:</div>
+            <div class="widget-options">
+                <button data-correct="true">long (held about twice as long)</button>
+                <button data-correct="false">always the stressed syllable</button>
+                <button data-correct="false">silent</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; match the sound</div>
+            <div class="widget-question">Long <span class="lat">&#363;</span> sounds most like the vowel in which English word?</div>
+            <div class="widget-options">
+                <button data-correct="false">put</button>
+                <button data-correct="true">rude</button>
+                <button data-correct="false">cup</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; meaning by length</div>
+            <div class="widget-question"><span class="lat">Malus</span> means &ldquo;bad.&rdquo; With a macron, <span class="lat">m&#257;lus</span> means:</div>
+            <div class="widget-options">
+                <button data-correct="true">apple tree</button>
+                <button data-correct="false">the sea</button>
+                <button data-correct="false">a very bad man</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; spot the long vowel</div>
+            <div class="widget-question">Which of these shows a <strong>long</strong> e?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">e</span></button>
+                <button data-correct="false"><span class="lat">&#277;</span></button>
+                <button data-correct="true"><span class="lat">&#275;</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; match the sound</div>
+            <div class="widget-question">Short <span class="lat">i</span> (no macron) sounds most like the vowel in:</div>
+            <div class="widget-options">
+                <button data-correct="false">machine</button>
+                <button data-correct="true">pin</button>
+                <button data-correct="false">pine</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Out loud, say <span class="lat">malus</span> and then <span class="lat">m&#257;lus</span>, making the second <em>a</em> clearly longer. Explain how the length changes both the sound and the meaning. Then reveal.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body"><span class="lat">Malus</span> has a <strong>short</strong> a (clipped, as in &ldquo;aha&rdquo;) and means &ldquo;bad.&rdquo; <span class="lat">M&#257;lus</span> has a <strong>long</strong> &#257; (held, as in &ldquo;father&rdquo;) and means &ldquo;apple tree.&rdquo; A long vowel is held roughly twice as long as a short one &mdash; and here that difference is the whole word.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 0.03</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Vowels done &mdash; tomorrow we tackle the consonants that trip up English speakers (why <span class="lat">c</span> is always &ldquo;k&rdquo; and <span class="lat">v</span> is really &ldquo;w&rdquo;) and the three diphthongs, the vowel-pairs like <span class="lat">ae</span> and <span class="lat">au</span>.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then say the five vowels aloud in both lengths &mdash; <span class="lat">&#257;/a, &#275;/e, &#299;/i, &#333;/o, &#363;/u</span> &mdash; using the English comparison words to keep each sound steady.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; TEN CLEAN SOUNDS</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Five vowels, two lengths, and one little line that keeps them honest. You can now read a macron and know exactly what it's asking of you. Tomorrow, the consonants.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 0.02 &middot; Vowels, length &amp; macrons</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — you read the vowel length right.'
+        : 'Not quite — check the macron and the vowel chart, then try again.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="optima_latin_ludus_s1m13"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+                      http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="org_ludus">
+    <organization identifier="org_ludus">
+      <title>Beginning Latin — Module 13 Ludus (Timed Practice)</title>
+      <item identifier="item_ludus" identifierref="res_ludus">
+        <title>Module 13 Timed Practice: The Perfect Tense II</title>
+        <adlcp:masteryscore>0</adlcp:masteryscore>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="res_ludus" type="webcontent" adlcp:scormtype="sco" href="ludus_s1m13.html">
+      <file href="ludus_s1m13.html"/>
+    </resource>
+  </resources>
+</manifest>

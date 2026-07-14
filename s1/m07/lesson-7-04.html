@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 7.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 07</div>
+        <div style="font-size: 12px; color: #666;">The Dative Case</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 7.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Reading &mdash; the Underworld</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Journey of Aeneas</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 7.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Reading Latin &mdash; Aeneas in the Underworld</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Case plus words equals reading. Today the dative carries meaning &mdash; and Aeneas walks among the dead.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">First you read real Latin sentences where the dative names a receiver &mdash; a gift given <em>to</em> a god, a way shown <em>to</em> a hero. Then you follow Aeneas down into the <strong>Underworld</strong> of the <em>Aeneid</em>, Book 6: past the ferryman, to the shade of his father <strong>Anchises</strong> and a vision of the Rome that is to come. No new grammar today &mdash; today you <em>use</em> what you built.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read short Latin sentences that use a dative indirect object.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> retell Aeneas's descent to the Underworld and explain Elysium and Tartarus.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; WARM-UP <span class="pill-time">3 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Before we go below</h3>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">The Romans pictured an afterlife with different regions for different lives. What do you expect a &ldquo;good place&rdquo; to reward?</div>
+            <div class="widget-options">
+                <button data-response="A very Roman answer. The blessed fields — Elysium — were for the virtuous: those who served their family, gods, and country. You'll see Aeneas walk there in a moment.">a life of duty and virtue</button>
+                <button data-response="Understandable guess — but the Romans tied reward less to wealth than to virtue. Elysium, the blessed region, welcomed the dutiful and the honorable. Watch for that as you read.">wealth and success</button>
+                <button data-response="A thoughtful instinct. Fame did matter to Romans — but Elysium rewarded virtue above all: duty to gods, family, and country. The truly celebrated dead were the good, not just the famous.">being remembered and famous</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; READ ALONG <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Sentences with a receiver</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read each aloud. Find the subject (nominative), the thing acted on (accusative), and the receiver (dative). The gray line is your parse and translation &mdash; try it yourself before you read it.</p>
+        <div class="sentence"><span class="s-lat">Aenēās deō dōnum dōnat.</span><p class="parse">Aeneas gives a gift to the god. &mdash; <span class="lat">Aenēās</span> nom. (subject) &middot; <span class="lat">deō</span> dat. sg. (receiver) &middot; <span class="lat">dōnum</span> acc. sg. (thing given) &middot; <span class="lat">dōnat</span> 3rd sg.</p></div>
+        <div class="sentence"><span class="s-lat">Sibylla Aenēae viam mōnstrat.</span><p class="parse">The Sibyl shows the way to Aeneas. &mdash; <span class="lat">Sibylla</span> nom. sg. (the prophetess, glossed) &middot; <span class="lat">Aenēae</span> dat. sg. &middot; <span class="lat">viam</span> acc. sg. &middot; <span class="lat">mōnstrat</span> 3rd sg.</p></div>
+        <div class="sentence"><span class="s-lat">Umbra Aenēae fābulam narrat.</span><p class="parse">The shade tells Aeneas a story. &mdash; <span class="lat">umbra</span> nom. sg. &middot; <span class="lat">Aenēae</span> dat. sg. (receiver) &middot; <span class="lat">fābulam</span> acc. sg. &middot; <span class="lat">narrat</span> 3rd sg.</p></div>
+        <div class="sentence"><span class="s-lat">Anchīsēs Aenēae umbrās mōnstrat.</span><p class="parse">Anchises shows the shades to Aeneas. &mdash; <span class="lat">Anchīsēs</span> nom. sg. (the father, glossed) &middot; <span class="lat">Aenēae</span> dat. sg. &middot; <span class="lat">umbrās</span> acc. pl. &middot; <span class="lat">mōnstrat</span> 3rd sg.</p></div>
+        <div class="sentence"><span class="s-lat">Nautae deīs dōna dōnant.</span><p class="parse">The sailors give gifts to the gods. &mdash; <span class="lat">nautae</span> nom. pl. &middot; <span class="lat">deīs</span> dat. pl. (receivers) &middot; <span class="lat">dōna</span> acc. pl. &middot; <span class="lat">dōnant</span> 3rd pl.</p></div>
+        <div style="background:#F4F9FC;border:1px solid #D0D9E8;border-left:4px solid #2196D0;border-radius:6px;padding:12px 16px;margin:12px 0 0;">
+            <div style="font-size:11px;color:#1B6A94;letter-spacing:.3px;margin-bottom:6px;">&#128161; READING TIP &middot; THREE JOBS</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">With verbs of giving, telling, and showing, expect up to three players: a <em>doer</em> (nominative), a <em>thing</em> (accusative), and a <em>receiver</em> (dative). Latin word order is flexible &mdash; let the <strong>endings</strong>, not the position, tell you each word's job.</p>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; CULTURAL READING <span class="pill-time">13 min</span></div>
+        <div class="culture-box">
+            <div class="lbl">&#127963;&#65039; AENEAS IN THE UNDERWORLD &middot; <em>AENEID</em>, BOOK 6</div>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">Aeneas comes at last to Italy. There, at Cumae, a prophetess called the <strong>Sibyl</strong> guides him on the strangest leg of his journey: a descent, while still alive, into the land of the dead. To pass, he must first find and pluck a <strong>golden bough</strong> as a gift for the queen of the underworld. Carrying it, he goes down.</p>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">He crosses the black river <strong>Styx</strong>, ferried by grim old <strong>Charon</strong>; he passes <strong>Cerberus</strong>, the three-headed hound at the gate. In the mournful shadows he glimpses the shade of <strong>Dido</strong> &mdash; she turns away and will not speak. But Aeneas is searching for one soul above all: his father <strong>Anchises</strong>, who had died on the voyage.</p>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">He finds him in <strong>Elysium</strong>, the sunlit fields of the blessed. There Anchises does something remarkable: he shows his son the souls who are waiting to be born &mdash; a <strong>parade of future Roman heroes</strong>, including Romulus, the great generals, and Augustus himself. &ldquo;Roman,&rdquo; Anchises says in effect, &ldquo;your art will be to rule the peoples and to crown peace with law.&rdquo; Aeneas climbs back to the living world carrying not treasure but <em>purpose</em>: he has seen what Rome is for.</p>
+        </div>
+        <div class="virtue-box">
+            <div class="lbl">&#9878;&#65039; ELYSIUM AND TARTARUS &middot; A JUST AFTERLIFE</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">The Romans imagined the world below as <em>sorted</em>. <strong>Elysium</strong> was the region of light and rest, home to the virtuous and the dutiful. <strong>Tartarus</strong> was the deep pit of punishment, where the wicked paid for their crimes. To a Roman, the geography of the afterlife was a statement about justice: how you live &mdash; whether you honor gods, family, and country &mdash; decides where you belong.</p>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Notice that Aeneas's reward in the Underworld is not comfort but a <em>mission</em>. This is the same <span class="lat">pietas</span> you met with Dido: duty carried forward, even beyond the grave.</p>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 4 &middot; CHECK YOUR READING <span class="pill-time">12 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five checks &mdash; some test the story, some test your Latin reading. Take them slowly; the point is to prove you can both read the sentences and follow the tale. Wrong answers give a hint; use Reset to try again.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; comprehension</div>
+            <div class="widget-question">Who guides Aeneas down into the Underworld?</div>
+            <div class="widget-options">
+                <button data-correct="true">the Sibyl of Cumae</button>
+                <button data-correct="false">Charon the ferryman</button>
+                <button data-correct="false">Dido</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; comprehension</div>
+            <div class="widget-question">Whose shade is Aeneas searching for above all?</div>
+            <div class="widget-options">
+                <button data-correct="false">Dido's</button>
+                <button data-correct="true">his father Anchises's</button>
+                <button data-correct="false">Romulus's</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; translate</div>
+            <div class="widget-question">Translate: <span class="lat">Aenēās deō dōnum dōnat.</span></div>
+            <div class="widget-options">
+                <button data-correct="true">Aeneas gives a gift to the god</button>
+                <button data-correct="false">The god gives Aeneas a gift</button>
+                <button data-correct="false">Aeneas gives the god's gift</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the afterlife</div>
+            <div class="widget-question"><span class="lat">Elysium</span> is best described as:</div>
+            <div class="widget-options">
+                <button data-correct="false">the pit where the wicked are punished</button>
+                <button data-correct="true">the sunlit fields of the blessed and virtuous</button>
+                <button data-correct="false">the ferryman of the dead</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; translate</div>
+            <div class="widget-question">Translate: <span class="lat">Umbra Aenēae fābulam narrat.</span></div>
+            <div class="widget-options">
+                <button data-correct="false">Aeneas tells the shade a story</button>
+                <button data-correct="true">The shade tells Aeneas a story</button>
+                <button data-correct="false">The story tells the shade</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">In your own words: what does Anchises give Aeneas in Elysium &mdash; and why does it matter more than treasure? Think it through, then reveal one way to say it.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body">Anchises shows Aeneas the <strong>parade of future Roman heroes</strong> &mdash; the souls waiting to be born. What Aeneas carries back is not gold but <em>purpose</em>: he now sees that his hardships are building Rome. The vision turns his private grief into a mission for a whole people &mdash; that is why it outweighs any treasure.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 7.05</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you pull the whole week together with mixed practice &mdash; then you're ready for the module's graded work: the Ludus, the Translation Assignment, and the Module Quiz.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then retell Aeneas's descent in three sentences &mdash; and use the words <span class="lat">umbra</span>, <em>Elysium</em>, and <em>Tartarus</em> at least once.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; YOU READ LATIN TODAY</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Real sentences with a receiver, a real journey among the dead &mdash; and a case that finally carries meaning. One more day of practice and the module is yours.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 7.04 &middot; Reading &mdash; the Underworld</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — well read.'
+        : 'Not quite — reread the passage (or check the word endings) and try again.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

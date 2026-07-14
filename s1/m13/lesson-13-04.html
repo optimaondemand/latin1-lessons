@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 13.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 13</div>
+        <div style="font-size: 12px; color: #666;">The Perfect Tense II</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 13.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Reading &mdash; the Rōstra</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Art of Roman Rhetoric</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 13.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Reading Latin &mdash; Cicero on the Rōstra</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 42 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Now you can read across time. Today a single sentence can happen <em>now</em> or have happened <em>then</em> &mdash; and you can tell which.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">First you read connected Latin that mixes the present and the perfect, watching the verb stem to know <em>when</em> the action happens. Then you climb onto the <strong><span class="lat">Rōstra</span></strong> &mdash; the speaker&rsquo;s platform in the Roman Forum, built from the bronze beaks of captured warships, where Cicero made his name&hellip; and where, in the end, his enemies displayed his head. No new grammar today &mdash; today you <em>use</em> what you built.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read short Latin sentences and tell present action from perfect (past) action.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what the <span class="lat">Rōstra</span> was and why Cicero&rsquo;s death there is remembered.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; READ ALONG <span class="pill-time">14 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Sentences across time</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read each aloud. Find the subject, then the verb &mdash; and check the stem: a present stem means <em>now</em>, a perfect stem means <em>then</em>. The gray line is your parse and translation; try it yourself before you read it.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Before you read: when you meet a 3rd conjugation verb in a sentence, what will you look at first to tell <em>now</em> from <em>then</em>?</div>
+            <div class="widget-options">
+                <button data-response="Exactly. The stem is the proof: present dīcit (dīc-) vs. perfect dīxit (dīx-). Little time-words like hodiē and herī help too, but the stem never lies.">the verb&rsquo;s stem</button>
+                <button data-response="Good — words like hodiē (today) and herī (yesterday) really do signal the tense. Just remember the stem is the final proof: dīcit (now) vs. dīxit (then).">a time-word like hodiē or herī</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="sentence"><span class="s-lat">Cicerō ōrātor est.</span><p class="parse">Cicero is an orator. &mdash; <span class="lat">Cicerō</span> nom. sg. &middot; <span class="lat">ōrātor</span> (orator) predicate nom. &middot; <span class="lat">est</span> present of <span class="lat">esse</span>.</p></div>
+        <div class="sentence"><span class="s-lat">Hodiē Cicerō in Forō dīcit.</span><p class="parse">Today Cicero speaks in the Forum. &mdash; <span class="lat">hodiē</span> = &ldquo;today&rdquo; &middot; <span class="lat">in Forō</span> abl. (in the Forum) &middot; <span class="lat">dīcit</span> <strong>present</strong> 3rd sg. (present stem <span class="lat">dīc-</span>).</p></div>
+        <div class="sentence"><span class="s-lat">Herī Cicerō in Rōstrīs dīxit.</span><p class="parse">Yesterday Cicero spoke on the Rōstra. &mdash; <span class="lat">herī</span> = &ldquo;yesterday&rdquo; &middot; <span class="lat">in Rōstrīs</span> abl. (on the speaker&rsquo;s platform) &middot; <span class="lat">dīxit</span> <strong>perfect</strong> 3rd sg. (perfect stem <span class="lat">dīx-</span>).</p></div>
+        <div class="sentence"><span class="s-lat">Rōmānī Cicerōnem laudāvērunt.</span><p class="parse">The Romans praised Cicero. &mdash; <span class="lat">Rōmānī</span> nom. pl. (the Romans) &middot; <span class="lat">Cicerōnem</span> acc. sg. &middot; <span class="lat">laudāvērunt</span> perfect 3rd pl.</p></div>
+        <div class="sentence"><span class="s-lat">Cicerō librum scrīpsit et populō lēgit.</span><p class="parse">Cicero wrote a book and read it to the people. &mdash; <span class="lat">librum</span> acc. sg. (book) &middot; <span class="lat">scrīpsit</span> perfect &middot; <span class="lat">populō</span> dat. sg. (to the people) &middot; <span class="lat">lēgit</span> perfect (note the long <span class="lat">ē</span>: <span class="lat">lēgit</span> = &ldquo;read,&rdquo; not <span class="lat">legit</span> = &ldquo;reads&rdquo;).</p></div>
+        <div class="sentence"><span class="s-lat">Mīlitēs urbem cēpērunt et hostēs vīcērunt.</span><p class="parse">The soldiers took the city and conquered the enemy. &mdash; <span class="lat">mīlitēs</span> nom. pl. &middot; <span class="lat">urbem</span> acc. sg. (city) &middot; <span class="lat">cēpērunt</span> perfect of <span class="lat">capiō</span> &middot; <span class="lat">hostēs</span> acc. pl. (enemies) &middot; <span class="lat">vīcērunt</span> perfect of <span class="lat">vincō</span>.</p></div>
+        <div style="background:#F4F9FC;border:1px solid #D0D9E8;border-left:4px solid #2196D0;border-radius:6px;padding:12px 16px;margin:12px 0 0;">
+            <div style="font-size:11px;color:#1B6A94;letter-spacing:.3px;margin-bottom:6px;">&#128161; TWO SIGNPOSTS FOR TIME</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">The little words <span class="lat">hodiē</span> (today) and <span class="lat">herī</span> (yesterday) are your friends: they tell you which tense to expect before you even reach the verb. But the real proof is always in the stem &mdash; <span class="lat">dīcit</span> vs. <span class="lat">dīxit</span>.</p>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; CULTURAL READING <span class="pill-time">14 min</span></div>
+        <div class="culture-box">
+            <div class="lbl">&#127963;&#65039; THE RŌSTRA &middot; THE VOICE OF THE FORUM</div>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">In the heart of the Roman Forum stood a raised stone platform where speakers addressed the crowd. In 338 BCE, Rome crushed the fleet of the coastal town of Antium and stripped the bronze <strong>rams</strong> &mdash; the sharp <span class="lat">rōstra</span> (&ldquo;beaks&rdquo;) that warships used to smash enemy hulls &mdash; from the captured vessels. The Romans bolted those war-trophies to the front of the platform. From then on the platform itself carried their name: the <strong><span class="lat">Rōstra</span></strong>.</p>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">To speak from the <span class="lat">Rōstra</span> was to hold Rome&rsquo;s attention. Here <strong>Cicero</strong> &mdash; the greatest orator of the Republic &mdash; warned the people against those who would seize power for themselves. Words spoken here could raise a man to consul or bring a conspirator down.</p>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">But words made enemies. After Cicero attacked Mark Antony in a series of blistering speeches, Antony had him hunted down and killed in 43 BCE. On Antony&rsquo;s order, Cicero&rsquo;s head and hands &mdash; the hands that had written the speeches &mdash; were nailed to the <span class="lat">Rōstra</span>, in the very place from which he had spoken. The platform that had carried his voice now displayed his silence.</p>
+        </div>
+        <div class="virtue-box">
+            <div class="lbl">&#9878;&#65039; COURAGE &middot; THE COST OF SPEAKING TRUTH TO POWER</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Cicero knew Antony was dangerous, and he spoke anyway. The Romans prized <span class="lat">virtūs</span> &mdash; courage &mdash; and they remembered Cicero not only for how well he spoke but for what it cost him. To speak the truth to someone who can end you is one of the oldest tests of courage, and the <span class="lat">Rōstra</span> is its monument.</p>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 3 &middot; CHECK YOUR READING <span class="pill-time">14 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five checks &mdash; some test the story, some test your Latin reading. Take them slowly; the point is to prove you can both read the sentences and follow the tale. Answers vary, so read closely.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; where the name comes from</div>
+            <div class="widget-question">Why was the speaker&rsquo;s platform called the <span class="lat">Rōstra</span>?</div>
+            <div class="widget-options">
+                <button data-correct="false">It was shaped like a giant mouth</button>
+                <button data-correct="true">It was decorated with the bronze &ldquo;beaks&rdquo; of captured warships</button>
+                <button data-correct="false">It was named after an emperor</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; present or perfect?</div>
+            <div class="widget-question">In <span class="lat">Herī Cicerō in Rōstrīs dīxit</span>, when did Cicero speak?</div>
+            <div class="widget-options">
+                <button data-correct="false">right now (present)</button>
+                <button data-correct="true">in the past (perfect &mdash; <span class="lat">dīxit</span>)</button>
+                <button data-correct="false">the sentence doesn&rsquo;t say</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; translate</div>
+            <div class="widget-question">Translate: <span class="lat">Rōmānī Cicerōnem laudāvērunt.</span></div>
+            <div class="widget-options">
+                <button data-correct="false">Cicero praises the Romans</button>
+                <button data-correct="true">The Romans praised Cicero</button>
+                <button data-correct="false">The Romans praise Cicero</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; comprehension</div>
+            <div class="widget-question">What happened to Cicero after he attacked Mark Antony in his speeches?</div>
+            <div class="widget-options">
+                <button data-correct="false">He was elected consul again</button>
+                <button data-correct="false">He was exiled to Carthage</button>
+                <button data-correct="true">He was killed, and his head was displayed on the Rōstra</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; translate</div>
+            <div class="widget-question">Translate: <span class="lat">Mīlitēs urbem cēpērunt.</span></div>
+            <div class="widget-options">
+                <button data-correct="true">The soldiers took the city</button>
+                <button data-correct="false">The soldiers take the city</button>
+                <button data-correct="false">The city took the soldiers</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">In your own words: what does the story of the <span class="lat">Rōstra</span> &mdash; from ships&rsquo; beaks to Cicero&rsquo;s head &mdash; say about the power and the danger of public speech in Rome? Think it through, then reveal one way to say it.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body">The <span class="lat">Rōstra</span> was where words won victories &mdash; it was literally built from military ones. Cicero used it to shape Rome by speaking, which made him powerful and made him enemies. When Antony displayed his head there, it was a message: speech can lift you up and it can get you killed. The platform holds both truths at once.</div>
+        </div>
+    </div>
+
+    <!-- ETYMOLOGY -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; ETYMOLOGY MOMENT</div>
+        <div class="etym-box">
+            <div class="lbl">&#127793; FROM <span class="lat">RŌSTRA</span> TO THE MODERN LECTERN</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">English kept the word: a <strong>rostrum</strong> is the lectern or platform a speaker stands at &mdash; a museum guide, a conductor, a graduation speaker. Every time someone &ldquo;steps up to the rostrum,&rdquo; they are standing, in name at least, on the beaks of ships Rome captured in 338 BCE. And the verb of the platform, <span class="lat">dīcō</span> (to say), still speaks through <strong>dictate, diction,</strong> and <strong>predict</strong>.</p>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 13.05</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you pull the whole week together with mixed practice &mdash; then you&rsquo;re ready for the module&rsquo;s graded work: the Ludus, the Translation Assignment, and the Module Quiz.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then, in three sentences, retell the story of the <span class="lat">Rōstra</span> &mdash; where its name came from, what Cicero did there, and how he died.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; YOU READ ACROSS TIME TODAY</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Real sentences that move between now and then, and a story of what words could cost in Rome. One more day of practice and the module is yours.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 13.04 &middot; Reading &mdash; the Rōstra</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — well read.'
+        : 'Not quite — reread the passage (or check the verb stem for tense) and try again.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

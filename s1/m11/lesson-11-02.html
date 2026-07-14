@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 11.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 11</div>
+        <div style="font-size: 12px; color: #666;">The Perfect Tense I</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 11.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">One set of endings, a new stem</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Art of Roman Rhetoric</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 11.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> One Stem Change, Six Endings</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Here is the good news: the perfect tense uses <em>one</em> set of endings for every verb in Latin.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">The present tense had different vowels for different families. The perfect is simpler: find the verb's <strong>perfect stem</strong>, then add the same six endings &mdash; <span class="lat">-ī, -istī, -it, -imus, -istis, -ērunt</span> &mdash; that work for <em>all</em> verbs, in every conjugation. Today you learn where the perfect stem comes from for 1st and 2nd conjugation verbs, and you build two full paradigms. Learn this pattern once and you can put any verb into the past.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> add the six perfect endings <span class="lat">-ī, -istī, -it, -imus, -istis, -ērunt</span> to a perfect stem.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form the perfect stem of a 1st conjugation verb with <span class="lat">-āv-</span> and of a 2nd conjugation verb with <span class="lat">-u-</span> or a vowel change.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> conjugate <span class="lat">laudāre</span> and <span class="lat">habēre</span> fully in the perfect tense.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; RECALL <span class="pill-time">4 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Yesterday's one idea</h3>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Without scrolling back: what does the <em>perfect</em> tense tell you about an action?</div>
+            <div class="widget-options">
+                <button data-response="Yes — the perfect points at a completed, finished action: 'praised' or 'has praised.' Today we build the forms that carry that meaning.">That it is finished / completed</button>
+                <button data-response="That's the present tense — action happening right now. The perfect is its partner for the past: an action already carried through. Let's build it.">That it is happening right now</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE ONE ENDING SET <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Six endings for every verb</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">In the present tense, each conjugation had its own vowel. The perfect drops all that: <strong>one</strong> set of personal endings serves every Latin verb, no matter its conjugation. Here they are &mdash; the six to memorize:</p>
+        <table class="gtable">
+            <thead><tr><th>Ending</th><th>Person &amp; number</th><th>English subject</th></tr></thead>
+            <tbody>
+                <tr><td><span class="ending">-ī</span></td><td>1st singular</td><td>I</td></tr>
+                <tr><td><span class="ending">-istī</span></td><td>2nd singular</td><td>you</td></tr>
+                <tr><td><span class="ending">-it</span></td><td>3rd singular</td><td>he / she / it</td></tr>
+                <tr><td><span class="ending">-imus</span></td><td>1st plural</td><td>we</td></tr>
+                <tr><td><span class="ending">-istis</span></td><td>2nd plural</td><td>you all</td></tr>
+                <tr><td><span class="ending">-ērunt</span></td><td>3rd plural</td><td>they</td></tr>
+            </tbody>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 0;">These are <em>not</em> the present endings (<span class="lat">-ō, -s, -t, -mus, -tis, -nt</span>). They belong to the perfect alone &mdash; and the moment you see <span class="lat">-istī</span> or <span class="lat">-istis</span> or <span class="lat">-ērunt</span> on a verb, you know at once you are looking at the completed past.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128204; PART 3 &middot; FIND THE PERFECT STEM <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Where the endings attach</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The endings need a <strong>perfect stem</strong> to sit on. The perfect stem is different from the present stem, and how you build it depends on the conjugation.</p>
+        <div class="contrast">
+            <div class="col a">
+                <h4>1st conjugation &mdash; add <span class="lat">-āv-</span></h4>
+                <div style="font-size:16px;color:#1a2340;line-height:1.6;"><span class="lat">laudāre</span> &rarr; stem <span class="lat">laud<span class="ending">āv</span>-</span><br><span class="lat">portāre</span> &rarr; <span class="lat">port<span class="ending">āv</span>-</span><br><span class="lat">amāre</span> &rarr; <span class="lat">am<span class="ending">āv</span>-</span><br><br>Regular and predictable: nearly every <span class="lat">-āre</span> verb takes <span class="lat">-āv-</span>.</div>
+            </div>
+            <div class="col b">
+                <h4>2nd conjugation &mdash; <span class="lat">-u-</span> or a vowel change</h4>
+                <div style="font-size:16px;color:#1a2340;line-height:1.6;"><span class="lat">habēre</span> &rarr; stem <span class="lat">hab<span class="ending">u</span>-</span><br><span class="lat">monēre</span> &rarr; <span class="lat">mon<span class="ending">u</span>-</span><br><span class="lat">vidēre</span> &rarr; <span class="lat"><span class="ending">vīd</span>-</span> (vowel change)<br><br>Most add <span class="lat">-u-</span>; a few change the vowel instead. These you learn per verb.</div>
+            </div>
+        </div>
+        <div style="background:#F4F9FC;border:1px solid #D0D9E8;border-left:4px solid #2196D0;border-radius:6px;padding:12px 16px;margin:12px 0 0;">
+            <div style="font-size:11px;color:#1B6A94;letter-spacing:.3px;margin-bottom:6px;">&#128161; HOW A DICTIONARY SHOWS IT</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">A Latin dictionary lists the perfect stem for you in the verb's third form: <span class="lat">laudō, laudāre, <strong>laudāvī</strong></span> or <span class="lat">habeō, habēre, <strong>habuī</strong></span>. That third form &mdash; the 1st person singular perfect &mdash; hands you the stem: just drop the <span class="lat">-ī</span>. Tomorrow you'll meet all of this module's verbs in exactly that format.</p>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 4 &middot; BUILD &amp; PRACTICE <span class="pill-time">20 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Two full paradigms</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Stem plus endings. Here is a 1st conjugation verb, <span class="lat">laudāre</span> (to praise), and a 2nd conjugation verb, <span class="lat">habēre</span> (to have), fully conjugated in the perfect tense &mdash; and note that both use the <em>same</em> endings:</p>
+        <table class="gtable">
+            <thead><tr><th></th><th><span class="lat">laudāre</span> &mdash; stem <span class="lat">laudāv-</span></th><th><span class="lat">habēre</span> &mdash; stem <span class="lat">habu-</span></th></tr></thead>
+            <tbody>
+                <tr><td style="font-weight:600;">I</td><td><span class="lat">laudāv<span class="ending">ī</span></span> &mdash; I praised</td><td><span class="lat">habu<span class="ending">ī</span></span> &mdash; I had</td></tr>
+                <tr><td style="font-weight:600;">you</td><td><span class="lat">laudāv<span class="ending">istī</span></span></td><td><span class="lat">habu<span class="ending">istī</span></span></td></tr>
+                <tr><td style="font-weight:600;">he/she/it</td><td><span class="lat">laudāv<span class="ending">it</span></span></td><td><span class="lat">habu<span class="ending">it</span></span></td></tr>
+                <tr><td style="font-weight:600;">we</td><td><span class="lat">laudāv<span class="ending">imus</span></span></td><td><span class="lat">habu<span class="ending">imus</span></span></td></tr>
+                <tr><td style="font-weight:600;">you all</td><td><span class="lat">laudāv<span class="ending">istis</span></span></td><td><span class="lat">habu<span class="ending">istis</span></span></td></tr>
+                <tr><td style="font-weight:600;">they</td><td><span class="lat">laudāv<span class="ending">ērunt</span></span></td><td><span class="lat">habu<span class="ending">ērunt</span></span></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:14px 0 6px;">Five reps &mdash; build forms and read endings both directions. Keep the chart above in view; the goal is to make the six endings automatic.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; build the form</div>
+            <div class="widget-question">Take <span class="lat">laudāre</span> (stem <span class="lat">laudāv-</span>) and make it say &ldquo;<strong>they praised</strong>.&rdquo;</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">laudāvimus</span></button>
+                <button data-correct="true"><span class="lat">laudāvērunt</span></button>
+                <button data-correct="false"><span class="lat">laudāvit</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; name the ending</div>
+            <div class="widget-question">Which perfect ending means &ldquo;<strong>we ___</strong>&rdquo;?</div>
+            <div class="widget-options">
+                <button data-correct="true"><span class="lat">-imus</span></button>
+                <button data-correct="false"><span class="lat">-istis</span></button>
+                <button data-correct="false"><span class="lat">-ērunt</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; read the ending</div>
+            <div class="widget-question"><span class="lat">Habuistī.</span> Who is meant?</div>
+            <div class="widget-options">
+                <button data-correct="false">they had</button>
+                <button data-correct="false">we had</button>
+                <button data-correct="true">you had</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; form the stem</div>
+            <div class="widget-question">The perfect stem of a 1st conjugation verb like <span class="lat">portāre</span> is built with:</div>
+            <div class="widget-options">
+                <button data-correct="false">the ending <span class="lat">-u-</span></button>
+                <button data-correct="true">the marker <span class="lat">-āv-</span> (<span class="lat">portāv-</span>)</button>
+                <button data-correct="false">a vowel change only</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; build the form</div>
+            <div class="widget-question">Make <span class="lat">habēre</span> (stem <span class="lat">habu-</span>) say &ldquo;<strong>she had</strong>.&rdquo;</div>
+            <div class="widget-options">
+                <button data-correct="true"><span class="lat">habuit</span></button>
+                <button data-correct="false"><span class="lat">habuērunt</span></button>
+                <button data-correct="false"><span class="lat">habuistis</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Now build one yourself. The verb <span class="lat">vidēre</span> (to see) has the perfect stem <span class="lat">vīd-</span>. What is the form for &ldquo;<strong>we saw</strong>&rdquo;? Say it, then reveal.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body"><span class="lat">Vīdimus</span> &mdash; stem <span class="lat">vīd-</span> + the &ldquo;we&rdquo; ending <span class="lat">-imus</span>. Same endings as <span class="lat">laudāre</span> and <span class="lat">habēre</span>; only the stem is different.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 11.03</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you meet the module's verbs in full dictionary format &mdash; each with its perfect stem ready to use &mdash; plus the words of praise and glory that power a Roman <span class="lat">encomium</span>, and the English hiding inside them.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then recite the full perfect of <span class="lat">portāre</span> out loud, all six forms &mdash; <span class="lat">portāvī, portāvistī, portāvit, portāvimus, portāvistis, portāvērunt</span>.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; THE ENGINE IS BUILT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">One stem change and six endings &mdash; and now any 1st or 2nd conjugation verb can speak in the past. Tomorrow we hand you the verbs worth saying it with.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 11.02 &middot; One set of endings, a new stem</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — you matched the perfect stem and ending to the right person and number.'
+        : 'Not quite — check the six-ending chart (and the stem) and try again.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 2.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 02</div>
+        <div style="font-size: 12px; color: #666;">The Verb Esse</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Predicate nominative &amp; Aeneas</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Journey of Aeneas</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Two Nominatives, One Equation &mdash; Reading Aeneas</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Verb plus vocabulary equals reading. Today the pieces click together &mdash; and you meet the hero the whole quarter is built around.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">First, one elegant rule: when <span class="lat">esse</span> links two nouns, <strong>both</strong> stand in the nominative &mdash; the second one is called the <em>predicate nominative</em>. That rule lets you read real Latin equation sentences. Then you meet <strong>Aeneas</strong>: a refugee from a burned city, carrying his people's gods toward a homeland he has never seen, driven by the Roman virtue of <span class="lat">pietas</span>.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognize a predicate nominative and explain why both nouns joined by <span class="lat">esse</span> are nominative.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read and translate simple Latin equation sentences that describe the Roman world.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain who Aeneas is and what <span class="lat">pietas</span> means.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; WARM-UP <span class="pill-time">4 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A guess before the rule</h3>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">In <span class="lat">Aenēās nauta est</span> (&ldquo;Aeneas is a sailor&rdquo;), <span class="lat">Aenēās</span> is the subject &mdash; nominative. What case do you think <span class="lat">nauta</span> is in?</div>
+            <div class="widget-options">
+                <button data-response="Right instinct. Because esse sets the two equal — Aeneas IS the sailor — nauta shares the subject's case: nominative. That second nominative has a name, and you'll learn it in a moment.">Nominative too &mdash; they're the same person</button>
+                <button data-response="A reasonable guess — you might expect the second noun to change case. But esse is special: it equates rather than acts, so nauta stays nominative, just like the subject. Let's see why.">Some other case</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE PREDICATE NOMINATIVE <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Both sides of the equals sign</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Because <span class="lat">esse</span> equates rather than acts, it doesn't send its second noun into a different case the way an action verb would. Instead it creates an <strong>equation</strong>: A = B. Both nouns name the same thing, so both stay <strong>nominative</strong>. The noun on the far side of <span class="lat">esse</span> is called the <strong>predicate nominative</strong>.</p>
+        <div style="background:#F4F9FC;border:1px solid #D0D9E8;border-left:4px solid #2196D0;border-radius:6px;padding:12px 16px;margin:12px 0;">
+            <div style="font-size:11px;color:#1B6A94;letter-spacing:.3px;margin-bottom:6px;">&#128161; THE EQUATION RULE</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;"><span class="lat">Dīdō rēgīna est</span> &rarr; Dido = queen &rarr; &ldquo;Dido is a queen.&rdquo; Both <span class="lat">Dīdō</span> and <span class="lat">rēgīna</span> are nominative because they point to one and the same person.</p>
+        </div>
+        <table class="gtable">
+            <thead><tr><th>Sentence</th><th>Subject (nom.)</th><th>Verb</th><th>Predicate nom.</th></tr></thead>
+            <tbody>
+                <tr><td><span class="lat">Aenēās nauta est.</span></td><td><span class="lat">Aenēās</span></td><td><span class="lat">est</span></td><td><span class="lat">nauta</span></td></tr>
+                <tr><td><span class="lat">Italia terra est.</span></td><td><span class="lat">Italia</span></td><td><span class="lat">est</span></td><td><span class="lat">terra</span></td></tr>
+                <tr><td><span class="lat">Venus dea est.</span></td><td><span class="lat">Venus</span></td><td><span class="lat">est</span></td><td><span class="lat">dea</span></td></tr>
+                <tr><td><span class="lat">Sicilia et Britannia īnsulae sunt.</span></td><td><span class="lat">Sicilia et Britannia</span></td><td><span class="lat">sunt</span></td><td><span class="lat">īnsulae</span></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:10px 0 0;">Notice the last one: two subjects joined by <span class="lat">et</span> (&ldquo;and&rdquo;) are plural, so the verb is <span class="lat">sunt</span> (&ldquo;are&rdquo;) and the predicate noun is plural too, <span class="lat">īnsulae</span> (&ldquo;islands&rdquo;). Subject and verb still agree in number.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; READ &amp; MEET AENEAS <span class="pill-time">14 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Sentences you can now read</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read each aloud. Find the subject, find the form of <span class="lat">esse</span>, and check the equation. The gray line is your parse and translation &mdash; try it yourself before you read it.</p>
+        <div class="sentence"><span class="s-lat">Trōia patria Aenēae est.</span><p class="parse">Troy is the homeland of Aeneas. &mdash; <span class="lat">Trōia</span> nom. (subject) &middot; <span class="lat">patria</span> pred. nom. &middot; <span class="lat">est</span> 3rd sg. [<span class="lat">Aenēae</span> = &ldquo;of Aeneas,&rdquo; a form you'll meet in M06 &mdash; just recognize it here.]</p></div>
+        <div class="sentence"><span class="s-lat">Aenēās pius est.</span><p class="parse">Aeneas is devoted (dutiful). &mdash; <span class="lat">Aenēās</span> nom. &middot; <span class="lat">est</span> 3rd sg. Here the word after <span class="lat">esse</span> describes him rather than renaming him.</p></div>
+        <div class="sentence"><span class="s-lat">Venus et Iūnō deae sunt.</span><p class="parse">Venus and Juno are goddesses. &mdash; two subjects &rarr; <span class="lat">sunt</span> (3rd pl.) &middot; <span class="lat">deae</span> pred. nom. pl.</p></div>
+        <div class="sentence"><span class="s-lat">Nauta sum.</span><p class="parse">I am a sailor. &mdash; <span class="lat">sum</span> (&ldquo;I am&rdquo;) carries its own subject &middot; <span class="lat">nauta</span> pred. nom.</p></div>
+        <div class="culture-box">
+            <div class="lbl">&#127963;&#65039; WHO IS AENEAS? &middot; <em>AENEID</em>, THE STORY BEGINS</div>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">Aeneas is a prince of <strong>Troy</strong>. When the Greeks destroy the city, he escapes the flames carrying his aged father on his shoulders, leading his young son by the hand, and bearing the <span class="lat">Penātēs</span> &mdash; the sacred household gods of Troy. His wife is lost in the chaos. He has no city, no home, and no clear road; he has only a divine command: sail west and found a new nation that will one day become <strong>Rome</strong>.</p>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">His mother is the goddess <strong>Venus</strong>, who watches over him; the goddess <strong>Juno</strong>, queen of the gods, hates the Trojans and throws storm after storm in his path. Above them, <strong>Jupiter</strong> guarantees that fate will hold: Aeneas <em>will</em> reach Italy. The whole journey &mdash; from burning Troy to the future site of Rome &mdash; is the story of this quarter.</p>
+        </div>
+        <div class="virtue-box">
+            <div class="lbl">&#9878;&#65039; THE VIRTUE OF <span class="lat">PIETAS</span></div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Virgil's constant word for Aeneas is <span class="lat">pius</span> &mdash; and the virtue behind it is <span class="lat">pietas</span>: dutiful devotion to the gods, to one's family, and to one's destiny. It is not merely being religious; it is putting duty above personal desire. Carrying his father from the fire and his gods across the sea, Aeneas <em>is</em> <span class="lat">pietas</span> made into a man. When he finally says <span class="lat">sum pius Aenēās</span>, that one adjective tells a Roman everything about who he is.</p>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 4 &middot; CHECK YOUR READING <span class="pill-time">12 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five checks &mdash; some test your Latin reading, some test the story. Take them slowly; the point is to prove you can both read the sentences and follow the tale.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the rule</div>
+            <div class="widget-question">When <span class="lat">esse</span> links two nouns, the second noun (the predicate nominative) is in which case?</div>
+            <div class="widget-options">
+                <button data-correct="false">accusative</button>
+                <button data-correct="true">nominative</button>
+                <button data-correct="false">it has no case</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; translate</div>
+            <div class="widget-question">Translate: <span class="lat">Dīdō rēgīna est.</span></div>
+            <div class="widget-options">
+                <button data-correct="false">The queen is Dido's</button>
+                <button data-correct="true">Dido is a queen</button>
+                <button data-correct="false">Dido and the queen</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; choose the verb</div>
+            <div class="widget-question">Which form correctly completes &ldquo;<span class="lat">Venus et Iūnō deae ___</span>&rdquo; &mdash; &ldquo;Venus and Juno <strong>are</strong> goddesses&rdquo;?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">est</span></button>
+                <button data-correct="true"><span class="lat">sunt</span></button>
+                <button data-correct="false"><span class="lat">sum</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; who's who</div>
+            <div class="widget-question">Which goddess is Aeneas's mother and protector?</div>
+            <div class="widget-options">
+                <button data-correct="true">Venus</button>
+                <button data-correct="false">Juno</button>
+                <button data-correct="false">Dido</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the big word</div>
+            <div class="widget-question"><span class="lat">Pietas</span> is best described as:</div>
+            <div class="widget-options">
+                <button data-correct="false">love of adventure</button>
+                <button data-correct="false">skill in battle</button>
+                <button data-correct="true">dutiful devotion to gods, family, and destiny</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Build your own: write a Latin equation sentence meaning <em>&ldquo;Italy is a land.&rdquo;</em> Use the right subject, predicate noun, and form of <span class="lat">esse</span>. Then reveal one correct version.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body"><span class="lat">Italia terra est.</span> &mdash; <span class="lat">Italia</span> (nom. subject) + <span class="lat">terra</span> (predicate nom.) + <span class="lat">est</span> (3rd sg., &ldquo;is&rdquo;). Both nouns are nominative because the sentence sets them equal.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 2.05</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you pull the whole week together with mixed practice &mdash; then you're ready for the module's graded work: the Ludus, the Translation Assignment, and the Module Quiz.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then say aloud, in one sentence each: <em>what a predicate nominative is</em>, and <em>who Aeneas is</em> &mdash; using the word <span class="lat">pietas</span>.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; YOU READ LATIN TODAY</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Real equation sentences, a real hero &mdash; and a rule that ties both nouns to the case you already know. One more day of practice and the module is yours.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.04 &middot; Predicate nominative &amp; Aeneas</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — well read. Both nouns are nominative, and the equation holds.'
+        : 'Not quite — reread the sentence (or the story) and try again.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

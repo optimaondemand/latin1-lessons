@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 17.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+    .nextlist .row { display:flex; align-items:flex-start; gap:14px; margin-bottom:16px; }
+    .nextlist .n { min-width:34px; height:34px; border-radius:50%; background:#0E1C42; color:#fff; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .nextlist .pts { display:inline-block; background:#5A2A82; color:#fff; font-size:12px; border-radius:12px; padding:2px 9px; margin-left:6px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 17</div>
+        <div style="font-size: 12px; color: #666;">Review &amp; VR Museum</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 17.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The whole semester at once</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Art of Roman Rhetoric</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 17.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> The Whole Semester, All at Once</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 37 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The final day of Semester 1. Today you prove the whole thing holds together &mdash; then you go finish it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">No new material, and no single topic &mdash; today mixes <em>everything</em>: cases, tenses, adjectives, pronouns, commands. You run one round of cumulative practice, take an honest look at how far you have come, and then this page hands you off to your two <strong>summative</strong> tasks: the Semester&nbsp;1 Final Exam and the VR Aeneas Museum submission.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> move confidently between cases, tenses, adjectives, and pronouns in mixed practice.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> judge my readiness for the S1 Final and submit my VR Aeneas Museum.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; THE SEMESTER IN ONE TABLE <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Everything you can now do</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">You started the year unable to read a word of Latin. Look at the list you now command &mdash; and the story it was all built to tell.</p>
+        <table class="gtable">
+            <thead><tr><th>You can now&hellip;</th><th>Which lets you read&hellip;</th></tr></thead>
+            <tbody>
+                <tr><td>Use all five cases in 1st, 2nd, 3rd declension</td><td>who does what to whom, and how</td></tr>
+                <tr><td>Conjugate present &amp; perfect in three conjugations, plus <span class="lat">esse</span></td><td>action now and action completed</td></tr>
+                <tr><td>Make 2-1-2 adjectives agree</td><td>the <em>big</em> king, the <em>good</em> queen</td></tr>
+                <tr><td>Use pronouns and <span class="lat">is/ea/id</span></td><td>I, you, he, she, it &mdash; without repeating names</td></tr>
+                <tr><td>Give commands (imperative) and address (vocative)</td><td>the living voice of Roman rhetoric</td></tr>
+            </tbody>
+        </table>
+        <div class="etym-box">
+            <div class="lbl">&#127793; THE ETYMOLOGY THREAD, BOTH QUARTERS</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">From Q1's journey words (<span class="lat">aqua &rarr;</span> aquatic, <span class="lat">porta&#772;re &rarr;</span> transport) to Q2's language of power (<span class="lat">d&#299;cere &rarr;</span> diction, <span class="lat">v&#333;x &rarr;</span> vocal, <span class="lat">imper&#257;re &rarr;</span> emperor), one truth has held all year: a huge share of English is Latin in disguise. That is the lasting legacy &mdash; learn Latin roots once, and you keep unlocking English for life.</p>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 2 &middot; CUMULATIVE MIXED PRACTICE <span class="pill-time">20 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five reps, one from each corner of the semester &mdash; case, verb, adjective, pronoun, command. Then build a full sentence of your own.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; case</div>
+            <div class="widget-question">In <span class="lat">cum r&#275;ge</span> (&ldquo;with the king&rdquo;), the noun <span class="lat">r&#275;ge</span> is in which case?</div>
+            <div class="widget-options">
+                <button data-correct="false">genitive</button>
+                <button data-correct="true">ablative</button>
+                <button data-correct="false">accusative</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; verb</div>
+            <div class="widget-question">The perfect of <span class="lat">esse</span> meaning &ldquo;<strong>they were</strong>&rdquo; is:</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">sumus</span></button>
+                <button data-correct="false"><span class="lat">sunt</span></button>
+                <button data-correct="true"><span class="lat">fu&#275;runt</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; adjective</div>
+            <div class="widget-question"><span class="lat">Via</span> (road) is feminine. &ldquo;The long road&rdquo; is:</div>
+            <div class="widget-options">
+                <button data-correct="true"><span class="lat">longa via</span></button>
+                <button data-correct="false"><span class="lat">longus via</span></button>
+                <button data-correct="false"><span class="lat">longum via</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; pronoun</div>
+            <div class="widget-question">The accusative &ldquo;<strong>me</strong>&rdquo; (the object form of <span class="lat">ego</span>) is:</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">ego</span></button>
+                <button data-correct="true"><span class="lat">m&#275;</span></button>
+                <button data-correct="false"><span class="lat">t&#363;</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; command</div>
+            <div class="widget-question">Tell one person to &ldquo;<strong>send!</strong>&rdquo; &mdash; the singular imperative of <span class="lat">mittere</span> is:</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">mittunt</span></button>
+                <button data-correct="false"><span class="lat">mittite</span></button>
+                <button data-correct="true"><span class="lat">mitte</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Now build one yourself: write a full Latin sentence with a <em>subject</em> (nominative), a <em>direct object</em> (accusative), and a <em>present-tense verb</em>. Say it, check the agreement, then reveal a model.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body">One good model: <span class="lat">R&#275;x urbem tenet.</span> &mdash; <span class="lat">r&#275;x</span> (nom. subject) + <span class="lat">urbem</span> (acc. object) + <span class="lat">tenet</span> (3rd sg. present of <span class="lat">ten&#275;re</span>, &ldquo;holds&rdquo;). Any correct subject&ndash;object&ndash;verb sentence works &mdash; just be sure the verb agrees with the subject in number.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128173; PART 3 &middot; READY-CHECK &amp; REFLECTION <span class="pill-time">4 min</span></div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">A whole semester of Latin is behind you. Be honest &mdash; how ready do you feel for the Final and the museum?</div>
+            <div class="widget-options">
+                <button data-response="Then go earn it. Skim your weakest module once, then take the Final and submit the museum with confidence. You built this all year — trust the work.">Ready &mdash; let me finish strong</button>
+                <button data-response="A wise plan. Spend fifteen minutes on the topics from 17.01–17.03 that felt shakiest — the case chart and the verb charts are the highest-value review — then begin. You are closer than the nerves suggest.">A little review first, then I'm set</button>
+                <button data-response="Completely normal at the end of a big semester. Reread this module's five lessons in order — they are a map of the whole course — and let the etymology and the Aeneas story remind you why the grammar mattered. Then finish.">Proud, and a little nervous</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT — summative handoff -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; NOW COMPLETE YOUR SEMESTER 1 SUMMATIVE WORK</div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 14px;">This is the capstone &mdash; there is no module quiz or Ludus this week. Instead, everything you have done all semester funnels into two final tasks:</p>
+        <div class="nextlist">
+            <div class="row">
+                <div class="n">1</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>Semester 1 Final Exam</strong> <span class="pts">Cumulative &middot; M00&ndash;M17</span></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">A comprehensive exam covering the whole semester: all five cases across the three declensions, present and perfect tenses, <span class="lat">esse</span>, adjectives, pronouns, the imperative and vocative, plus the vocabulary and the Aeneas / rhetoric cultural spine. The five lessons of this module are your best preparation.</div></div>
+            </div>
+            <div class="row" style="margin-bottom:0;">
+                <div class="n">2</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>VR Aeneas Museum</strong> <span class="pts">100 pts</span></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">Submit your five-room virtual museum on Aeneas's journey from Troy to Rome (<em>Aeneid</em>, Books 1&ndash;6). Each room needs a title and description; at least two rooms need a correct Latin caption. Assessed on cultural accuracy, Latin language use, and room coherence.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then take the <strong>Semester 1 Final Exam</strong> and submit your <strong>VR Aeneas Museum</strong> &mdash; the two tasks that close out the semester.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; SEMESTER 1 COMPLETE</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Eighteen modules ago you could not read a word of Latin. Now you can parse a noun, conjure a verb in two tenses, follow Aeneas from a burning Troy to the shore of Italy &mdash; and hear the Latin still humming under your own English. Finish the Final, submit your museum, and take the win. <em>Macte virt&#363;te!</em> &mdash; well done, and keep it up!</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 17.05 &middot; The whole semester at once</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — a confident finish to the whole semester.'
+        : 'Not quite — revisit that topic in this module and try once more.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

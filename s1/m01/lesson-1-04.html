@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 1.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 01</div>
+        <div style="font-size: 12px; color: #666;">The Inflection Principle</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Troy, Greece, and fate</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Journey of Aeneas</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Out of the Ashes of Troy</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Today the words and the principle click into real sentences &mdash; and you meet the fire that starts the whole story of Rome.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">First you read a handful of true Latin sentences, finding the nominative subject in each. Then you learn the tale that stands behind this entire year: the <strong>Trojan War</strong> and the fall of Troy, the escape of the hero <strong>Aeneas</strong>, why Rome saw itself as both the child of Troy and the student of Greece, and the great Roman idea of <span class="lat">fātum</span> &mdash; fate. No new grammar today: today you <em>use</em> what you built.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read short Latin sentences and name the nominative subject in each.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> retell the fall of Troy and Aeneas's mission, and explain <span class="lat">fātum</span> and Rome's relationship to Greece.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; READ ALONG <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Sentences you can now read</h3>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">You are about to read your first real Latin sentences. When you meet one, where will you look first to find the subject?</div>
+            <div class="widget-options">
+                <button data-response="Exactly. The subject is the noun in the nominative — the naming case. Once you spot it, you know who or what the sentence is about. Let's read.">At the nominative &mdash; the naming case</button>
+                <button data-response="That's the English habit — the first word. In Latin the ENDING tells you the job, so a subject can sit anywhere. Look for the nominative form rather than the first position. Let's read.">At whichever word comes first</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read each aloud. Find the subject &mdash; the noun in the nominative &mdash; then read the gray parse line to check yourself. Remember, <span class="lat">est</span> just means &ldquo;is.&rdquo;</p>
+        <div class="sentence"><span class="s-lat">Trōia patria est.</span><p class="parse">Troy is a homeland. &mdash; <span class="lat">Trōia</span> nominative (subject) &middot; <span class="lat">patria</span> the word it is equated with &middot; <span class="lat">est</span> &ldquo;is&rdquo; (a verb formally taught in Module 02).</p></div>
+        <div class="sentence"><span class="s-lat">Italia terra est.</span><p class="parse">Italy is a land. &mdash; <span class="lat">Italia</span> nominative (subject). This is the land Aeneas is fated to reach.</p></div>
+        <div class="sentence"><span class="s-lat">Britannia īnsula est.</span><p class="parse">Britain is an island. &mdash; <span class="lat">Britannia</span> nominative (subject) &middot; <span class="lat">īnsula</span> &ldquo;island.&rdquo;</p></div>
+        <div class="sentence"><span class="s-lat">Graecia patria est.</span><p class="parse">Greece is a homeland. &mdash; <span class="lat">Graecia</span> nominative (subject); the homeland of the Greeks who besieged Troy.</p></div>
+        <div style="background:#F4F9FC;border:1px solid #D0D9E8;border-left:4px solid #2196D0;border-radius:6px;padding:12px 16px;margin:12px 0 0;">
+            <div style="font-size:11px;color:#1B6A94;letter-spacing:.3px;margin-bottom:6px;">&#128161; COMING SOON &middot; VERBS &amp; MORE CASES</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Right now your sentences can only <em>equate</em> one thing with another, using <span class="lat">est</span> (&ldquo;is&rdquo;). Soon they will <em>act</em>: the verb <span class="lat">esse</span> (&ldquo;to be&rdquo;) is taught in Module 02, the <strong>accusative</strong> object case in Module 03, and true action verbs in Module 05. Then <span class="lat">Graecia Trōiam vincit</span> &mdash; &ldquo;Greece conquers Troy&rdquo; &mdash; becomes readable, and you'll see the endings assign every role.</p>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; CULTURAL READING <span class="pill-time">14 min</span></div>
+        <div class="culture-box">
+            <div class="lbl">&#127963;&#65039; THE TROJAN WAR &amp; THE FALL OF TROY</div>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">The whole story begins with a theft. <strong>Paris</strong>, a prince of <strong>Troy</strong> &mdash; a great city on the coast of what is now Turkey &mdash; carries off <strong>Helen</strong>, the wife of a Greek king. To win her back, the kingdoms of <strong>Greece</strong> unite and sail against Troy. For ten years the two sides fight beneath the city walls; heroes fall on both sides &mdash; Hector for Troy, Achilles for Greece.</p>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0 0 10px;">At last the Greeks win not by strength but by a trick: they build an enormous wooden horse, hide soldiers inside, and pretend to sail home. The Trojans drag the horse within their walls in triumph. That night the hidden Greeks climb out, throw open the gates, and burn Troy to the ground. The <em>Trojan Horse</em> is now the world's most famous ambush.</p>
+            <p style="font-size:17px;color:#1a2340;line-height:1.65;margin:0;">From the flames one Trojan prince escapes: <strong>Aeneas</strong>, son of the goddess Venus. He carries his aged father Anchises on his shoulders, leads his small son by the hand, and rescues the household gods of Troy. He is not running away &mdash; he is carrying Troy's future with him. He is destined to sail west and plant the seed of a new and far greater city. That city will be Rome.</p>
+        </div>
+        <div class="virtue-box">
+            <div class="lbl">&#9878;&#65039; ROME, GREECE, AND <span class="lat">FĀTUM</span></div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 8px;"><strong>Rome and Greece.</strong> Centuries later Rome would conquer Greece by the sword &mdash; and then fall in love with everything Greek: its art, its poetry, its gods. Romans retold Greek myths as their own and answered the Greek poet Homer with their own poet <strong>Virgil</strong>, whose <em>Aeneid</em> follows Aeneas from Troy to Italy. To be Roman was, in part, to be an heir of Troy and a student of Greece.</p>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;"><strong><span class="lat">Fātum</span> &mdash; fate.</strong> Aeneas does not <em>choose</em> his journey; <span class="lat">fātum</span> chooses it for him. The word comes from <span class="lat">fārī</span>, &ldquo;to speak&rdquo; &mdash; fate is literally &ldquo;what has been spoken&rdquo; by the gods. Aeneas is <span class="lat">fātō profugus</span>, &ldquo;an exile driven by fate.&rdquo; A Roman hero's greatness lay in accepting the destiny the gods had spoken over him. (Etymology: <span class="lat">fātum</span> &rarr; <em>fate, fatal</em>.)</p>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 3 &middot; ETYMOLOGY MOMENT <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The grammar words are Latin too</h3>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Even the words we use to <em>talk about</em> Latin are borrowed from Latin. Here are the three from this module:</p>
+        <div class="etym-box">
+            <div class="lbl">&#127793; INFLECT &middot; CASE &middot; NOMINATIVE</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 8px;"><strong>inflect</strong> &larr; <span class="lat">īnflectere</span> = <span class="lat">in-</span> (in, toward) + <span class="lat">flectere</span> (to bend). To <em>inflect</em> a word is literally to &ldquo;bend&rdquo; its ending. The same root gives <em>flexible, reflect,</em> and <em>deflect</em> &mdash; and an &ldquo;inflection&rdquo; in your voice is a bend in its pitch.</p>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 8px;"><strong>case</strong> &larr; <span class="lat">cāsus</span> = &ldquo;a falling,&rdquo; from <span class="lat">cadere</span> (to fall). The Romans pictured the nominative as standing upright and the other cases &ldquo;falling away&rdquo; from it into their different jobs. The same root hides in <em>cadence, accident,</em> and <em>occasion</em>.</p>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;"><strong>nominative</strong> &larr; <span class="lat">nōmināre</span> (to name), from <span class="lat">nōmen</span> (name). It is the &ldquo;naming&rdquo; case &mdash; it names the subject. The same <span class="lat">nōmen</span> gives English <em>noun, nominate, nominal,</em> and <em>nomenclature</em>.</p>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 4 &middot; CHECK YOUR READING <span class="pill-time">13 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five checks &mdash; some test the story, some test your Latin reading. Take them slowly; the point is to prove you can both read the sentences and follow the tale.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; comprehension</div>
+            <div class="widget-question">How do the Greeks finally take Troy?</div>
+            <div class="widget-options">
+                <button data-correct="false">They burn the Greek fleet</button>
+                <button data-correct="true">With the trick of the wooden (Trojan) Horse</button>
+                <button data-correct="false">Helen opens the gates for them</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; find the subject</div>
+            <div class="widget-question">In <span class="lat">Trōia patria est</span>, which word is the nominative subject?</div>
+            <div class="widget-options">
+                <button data-correct="true"><span class="lat">Trōia</span></button>
+                <button data-correct="false"><span class="lat">patria</span></button>
+                <button data-correct="false"><span class="lat">est</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; who's who</div>
+            <div class="widget-question">Who is Aeneas?</div>
+            <div class="widget-options">
+                <button data-correct="false">A Greek king who sacks Troy</button>
+                <button data-correct="false">The poet who wrote the <em>Aeneid</em></button>
+                <button data-correct="true">A Trojan prince who escapes the burning city</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the big word</div>
+            <div class="widget-question"><span class="lat">Fātum</span> (fate) comes from a Latin verb meaning &ldquo;to ___.&rdquo;</div>
+            <div class="widget-options">
+                <button data-correct="false">fight</button>
+                <button data-correct="true">speak</button>
+                <button data-correct="false">sail</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; Rome &amp; Greece</div>
+            <div class="widget-question">Rome's attitude toward Greek culture is best described as:</div>
+            <div class="widget-options">
+                <button data-correct="true">admiration &mdash; Rome absorbed Greek art, myth, and gods</button>
+                <button data-correct="false">total rejection of everything Greek</button>
+                <button data-correct="false">complete indifference</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">In your own words: retell in two or three sentences how Troy fell and how Aeneas escaped. Say it out loud, then reveal one way to put it.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body">After ten years of war, the Greeks hid soldiers inside a giant wooden horse and pretended to sail away. The Trojans pulled it inside their walls, and that night the Greeks came out and burned Troy. Aeneas, a Trojan prince and son of Venus, escaped the flames carrying his father and leading his son &mdash; and with them the future of a city not yet built: Rome.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 1.05</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tomorrow you pull the whole week together with mixed practice &mdash; then you're ready for the module's graded work: the Ludus, the Translation Assignment, and the Module Quiz.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then retell the fall of Troy in three sentences &mdash; and use the words <span class="lat">Trōia</span>, <span class="lat">Aenēās</span>, and <span class="lat">fātum</span> at least once.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; YOU READ LATIN TODAY</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Real sentences, a real story, and the fire that starts the whole year. Aeneas is on the sea now, carrying Troy toward Italy. One more day of practice and the module is yours.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.04 &middot; Troy, Greece, and fate</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — well read.'
+        : 'Not quite — reread the passage (or check the word endings) and try again.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

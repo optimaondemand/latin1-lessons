@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 0.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 00</div>
+        <div style="font-size: 12px; color: #666;">Pronunciation &amp; the Alphabet</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 0.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Consonants &amp; diphthongs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Journey of Aeneas</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 0.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> The Sounds That Trip Up English Speakers</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Most Latin consonants sound just like English. A handful do not &mdash; and those are the ones that give you away.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">If you pronounce <span class="lat">Caesar</span> as &ldquo;SEE-zer,&rdquo; a Roman would blink. He said &ldquo;KYE-sar.&rdquo; Today you learn the small set of letters Latin plays by its own rules &mdash; <span class="lat">c</span> and <span class="lat">g</span> are always hard, <span class="lat">v</span> is really a &ldquo;w,&rdquo; consonant-<span class="lat">i</span> is a &ldquo;y,&rdquo; and <span class="lat">r</span> is rolled &mdash; plus the three <strong>diphthongs</strong>, vowel-pairs like <span class="lat">ae</span> and <span class="lat">au</span> that blend into one sound. Master these and the names in the Aeneas story will finally sound Roman.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pronounce the tricky consonants <span class="lat">c, g, v,</span> consonant-<span class="lat">i,</span> and <span class="lat">r</span> the Roman way.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read the three main diphthongs <span class="lat">ae, oe,</span> and <span class="lat">au</span>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> apply these sounds to Roman names like <span class="lat">Caesar, Aen&#275;&#257;s,</span> and <span class="lat">Venus</span>.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; WARM-UP <span class="pill-time">4 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A famous name, said wrong for centuries</h3>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Say the name <span class="lat">Caesar</span> the way you've always heard it. How do you think a Roman actually pronounced that first letter?</div>
+            <div class="widget-options">
+                <button data-response="Great instinct &mdash; and it's the right one. In classical Latin, c is ALWAYS a hard 'k.' Caesar = 'KYE-sar.' In fact the German word Kaiser and the Russian Tsar both come from this name, and both kept the hard-k sound the Romans used.">Like a hard &ldquo;k&rdquo;</button>
+                <button data-response="That's the modern English habit &mdash; 'SEE-zer.' But classical Latin never softened c before e or i. The Romans said a hard 'k': 'KYE-sar.' Today's job is retraining that reflex.">Like an &ldquo;s&rdquo;</button>
+                <button data-response="Fair to be unsure &mdash; English has taught your ear to expect a soft 'c' here. Classical Latin didn't do that. The c in Caesar is a hard 'k': 'KYE-sar.' Keep listening for that pattern today.">I honestly don't know</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE TRICKY CONSONANTS <span class="pill-time">12 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">The letters that don't behave like English</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Most consonants (<span class="lat">b, d, f, l, m, n, p</span>&hellip;) sound just as you'd expect. Here are the ones that don't &mdash; learn these and you've learned the hard part.</p>
+        <table class="gtable">
+            <thead><tr><th>Letter</th><th>Sound</th><th>Example</th></tr></thead>
+            <tbody>
+                <tr><td><span class="lat">c</span></td><td><strong>Always hard</strong> &ldquo;k,&rdquo; even before e or i &mdash; never soft like &ldquo;city&rdquo;</td><td><span class="lat">Cicer&#333;</span> = &ldquo;KIK-er-oh&rdquo;</td></tr>
+                <tr><td><span class="lat">g</span></td><td><strong>Always hard</strong> &ldquo;g&rdquo; as in &ldquo;go&rdquo; &mdash; never soft like &ldquo;gem&rdquo;</td><td><span class="lat">gemma</span> = &ldquo;GHEM-ma&rdquo;</td></tr>
+                <tr><td><span class="lat">v</span></td><td>Like English <strong>&ldquo;w&rdquo;</strong></td><td><span class="lat">v&#299;num</span> = &ldquo;WEE-noom&rdquo;</td></tr>
+                <tr><td><span class="lat">i</span> (consonant)</td><td>Before a vowel, like English <strong>&ldquo;y&rdquo;</strong></td><td><span class="lat">iam</span> = &ldquo;yam&rdquo;; <span class="lat">I&#363;lius</span> = &ldquo;YOO-lee-oos&rdquo;</td></tr>
+                <tr><td><span class="lat">r</span></td><td><strong>Trilled / rolled</strong> with the tongue-tip, like Spanish or Italian r</td><td><span class="lat">R&#333;ma</span></td></tr>
+                <tr><td><span class="lat">s</span></td><td>Always the hissed &ldquo;s&rdquo; of &ldquo;sing&rdquo; &mdash; never a &ldquo;z&rdquo;</td><td><span class="lat">rosa</span> = &ldquo;ROH-sah&rdquo;</td></tr>
+                <tr><td><span class="lat">t</span></td><td>Always a clean &ldquo;t&rdquo; &mdash; never &ldquo;sh&rdquo;</td><td><span class="lat">n&#257;ti&#333;</span> = &ldquo;NAH-tee-oh,&rdquo; not &ldquo;nay-shun&rdquo;</td></tr>
+            </tbody>
+        </table>
+        <div style="background:#F4F9FC;border:1px solid #D0D9E8;border-left:4px solid #2196D0;border-radius:6px;padding:12px 16px;margin:12px 0 0;">
+            <div style="font-size:11px;color:#1B6A94;letter-spacing:.3px;margin-bottom:6px;">&#128161; THE GREEK PAIRS</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">In words borrowed from Greek you'll see <span class="lat">ch, ph,</span> and <span class="lat">th</span>. Classically these are just <strong>k, p,</strong> and <strong>t</strong> with a puff of breath &mdash; so <span class="lat">ph</span> is <em>not</em> the English &ldquo;f,&rdquo; and <span class="lat">th</span> is <em>not</em> the English &ldquo;th&rdquo; of &ldquo;this.&rdquo; Example: <span class="lat">Carth&#257;g&#333;</span> = &ldquo;car-THAH-goh.&rdquo;</p>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128204; PART 3 &middot; THE THREE DIPHTHONGS <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Two vowels, one sound</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A <strong>diphthong</strong> is a pair of vowels pronounced as a single glide &mdash; one sound, one syllable. Latin has three you'll meet constantly:</p>
+        <table class="gtable">
+            <thead><tr><th>Diphthong</th><th>Sounds like&hellip;</th><th>Example</th></tr></thead>
+            <tbody>
+                <tr><td><span class="lat">ae</span></td><td>the &ldquo;eye&rdquo; in <strong>aisle</strong> / <strong>high</strong></td><td><span class="lat">Caesar</span> (KYE-sar), <span class="lat">Aen&#275;&#257;s</span></td></tr>
+                <tr><td><span class="lat">oe</span></td><td>the &ldquo;oy&rdquo; in <strong>boy</strong></td><td><span class="lat">poena</span> (POY-nah, &ldquo;penalty&rdquo;)</td></tr>
+                <tr><td><span class="lat">au</span></td><td>the &ldquo;ow&rdquo; in <strong>cow</strong> / <strong>how</strong></td><td><span class="lat">aurum</span> (OW-room, &ldquo;gold&rdquo;), <span class="lat">nauta</span></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 0;">You'll occasionally see <span class="lat">ei, eu,</span> and <span class="lat">ui</span> as diphthongs too, but <span class="lat">ae, oe,</span> and <span class="lat">au</span> are the three that matter most. The key rule: when you see one of these pairs, don't say two separate vowels &mdash; glide them into a single sound.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 4 &middot; MAKE IT STICK <span class="pill-time">16 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five reps &mdash; some test a tricky consonant, some a diphthong. Remember: Latin plays these letters by its own rules, not English's. Wrong answers give a hint; use Reset to try again.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the letter c</div>
+            <div class="widget-question">In classical Latin, the letter <span class="lat">c</span> is:</div>
+            <div class="widget-options">
+                <button data-correct="true">always a hard &ldquo;k,&rdquo; as in &ldquo;cat&rdquo;</button>
+                <button data-correct="false">soft like &ldquo;s&rdquo; before e and i</button>
+                <button data-correct="false">silent at the start of a word</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the letter v</div>
+            <div class="widget-question">The Latin letter <span class="lat">v</span> is pronounced like the English letter:</div>
+            <div class="widget-options">
+                <button data-correct="false">v</button>
+                <button data-correct="false">f</button>
+                <button data-correct="true">w</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the diphthong ae</div>
+            <div class="widget-question">The diphthong <span class="lat">ae</span> sounds most like:</div>
+            <div class="widget-options">
+                <button data-correct="false">the &ldquo;ee&rdquo; in &ldquo;see&rdquo;</button>
+                <button data-correct="true">the &ldquo;eye&rdquo; in &ldquo;aisle&rdquo;</button>
+                <button data-correct="false">the &ldquo;ay&rdquo; in &ldquo;day&rdquo;</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the diphthong au</div>
+            <div class="widget-question">In <span class="lat">aurum</span> (&ldquo;gold&rdquo;), the diphthong <span class="lat">au</span> sounds like:</div>
+            <div class="widget-options">
+                <button data-correct="false">the &ldquo;oh&rdquo; in &ldquo;go&rdquo;</button>
+                <button data-correct="false">the &ldquo;oo&rdquo; in &ldquo;moon&rdquo;</button>
+                <button data-correct="true">the &ldquo;ow&rdquo; in &ldquo;cow&rdquo;</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; consonant i</div>
+            <div class="widget-question">At the start of <span class="lat">iam</span>, the letter <span class="lat">i</span> (a consonant here) sounds like English:</div>
+            <div class="widget-options">
+                <button data-correct="true">&ldquo;y&rdquo; as in &ldquo;yes&rdquo;</button>
+                <button data-correct="false">&ldquo;j&rdquo; as in &ldquo;jam&rdquo;</button>
+                <button data-correct="false">&ldquo;ch&rdquo; as in &ldquo;chair&rdquo;</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Out loud, pronounce <span class="lat">Caesar</span> and <span class="lat">Venus</span> the Roman way, and name the tricky sound in each. Then reveal.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body"><span class="lat">Caesar</span> = &ldquo;KYE-sar&rdquo; &mdash; hard <span class="lat">c</span> (&ldquo;k&rdquo;) plus the diphthong <span class="lat">ae</span> (&ldquo;eye&rdquo;). <span class="lat">Venus</span> = &ldquo;WE-nus&rdquo; &mdash; the <span class="lat">v</span> is a &ldquo;w.&rdquo; Both names sound noticeably different from the English habit, and that difference is pure classical Latin.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Continue to Lesson 0.04</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">You have the letters and their sounds. Tomorrow you learn to put a whole word together &mdash; how to break it into syllables and land the stress in the right place using the famous <em>penult rule</em>.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then say these five aloud the Roman way: <span class="lat">Cicer&#333;</span> (hard c), <span class="lat">v&#299;num</span> (v = w), <span class="lat">iam</span> (i = y), <span class="lat">poena</span> (oe = oy), <span class="lat">nauta</span> (au = ow).</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; THE HARD PART IS BEHIND YOU</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You've retrained the few sounds English got in the way of. From here on, a Latin word won't surprise you &mdash; you'll know exactly what each letter is asking for. Tomorrow: where to put the beat.</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 0.03 &middot; Consonants &amp; diphthongs</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — that’s the Roman sound, not the English one.'
+        : 'Not quite — remember Latin plays these letters by its own rules. Try again.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

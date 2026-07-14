@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 0.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .gtable td.v { font-style:italic; color:#0E1C42; font-weight:600; white-space:nowrap; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+    .nextlist .row { display:flex; align-items:flex-start; gap:14px; margin-bottom:16px; }
+    .nextlist .n { min-width:34px; height:34px; border-radius:50%; background:#0E1C42; color:#fff; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .nextlist .pts { display:inline-block; background:#5A2A82; color:#fff; font-size:12px; border-radius:12px; padding:2px 9px; margin-left:6px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 00</div>
+        <div style="font-size: 12px; color: #666;">Pronunciation &amp; the Alphabet</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 0.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Roman world &amp; consolidation</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Journey of Aeneas</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 0.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> The Roman World &mdash; and Why Latin Still Speaks</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 40 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Last day of the module. Today you meet the world this language belonged to &mdash; then you prove your pronunciation stuck and head to the graded work.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You've learned <em>how</em> Latin sounds. Now the <em>where</em> and <em>why</em>: the lands the Romans ruled, the reason a &ldquo;dead&rdquo; language still fills your doctor's charts, your legal documents, and every scientific name &mdash; and how it quietly became five living languages. Then mixed practice pulls the week together, and this page hands you off to the module's <strong>graded work</strong>.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the major regions of the Roman world and say where and when Latin was spoken.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why Latin still matters today and name the Romance languages.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pronounce this week's Roman names using everything I've learned.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; THE WEEK IN ONE TABLE <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Everything you built this week</h3>
+        <table class="gtable">
+            <thead><tr><th>Day</th><th>What you learned</th></tr></thead>
+            <tbody>
+                <tr><td>0.01</td><td>The 23-letter Latin alphabet; no J, U, or W; <span class="lat">I</span> and <span class="lat">V</span> do double duty; K, Y, Z are rare</td></tr>
+                <tr><td>0.02</td><td>Five vowels, each long or short; the macron marks length and can change meaning</td></tr>
+                <tr><td>0.03</td><td>Tricky consonants (<span class="lat">c</span>=k, <span class="lat">g</span> hard, <span class="lat">v</span>=w, <span class="lat">i</span>=y, <span class="lat">r</span> trilled); the diphthongs <span class="lat">ae, oe, au</span></td></tr>
+                <tr><td>0.04</td><td>Counting syllables and the penult rule for stress</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE ROMAN WORLD <span class="pill-time">10 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Where and when Latin lived</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Latin began as the local speech of <strong>Latium</strong>, the small region around the city of Rome, founded (by tradition) in 753 BC. As Rome grew from a village into an empire, its language traveled with its roads, armies, and laws &mdash; until Latin was spoken from Britain to North Africa. For over a thousand years afterward it remained the shared language of Western scholarship, law, and the Church.</p>
+        <div class="culture-box">
+            <div class="lbl">&#127963;&#65039; THE MAP OF THE ROMAN WORLD</div>
+            <table class="gtable" style="margin-top:0;">
+                <thead><tr><th>Latin name</th><th>Where it is today</th></tr></thead>
+                <tbody>
+                    <tr><td class="v">&#298;talia</td><td>Italy &mdash; the homeland, and Aeneas's fated destination</td></tr>
+                    <tr><td class="v">Graecia</td><td>Greece &mdash; whose culture Rome admired and absorbed</td></tr>
+                    <tr><td class="v">Gallia</td><td>Gaul &mdash; roughly modern France</td></tr>
+                    <tr><td class="v">Hisp&#257;nia</td><td>Hispania &mdash; modern Spain and Portugal</td></tr>
+                    <tr><td class="v">&#256;frica</td><td>the North African coast &mdash; home of Carthage, Dido's city</td></tr>
+                </tbody>
+            </table>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:10px 0 0;">Read each name aloud using this week's rules: <span class="lat">&#298;-TA-li-a</span>, <span class="lat">GRAE-ci-a</span> (hard c, <span class="lat">ae</span>=&ldquo;eye&rdquo;), <span class="lat">GAL-li-a</span>, <span class="lat">his-P&#256;-ni-a</span>, <span class="lat">&#256;-fri-ca</span>.</p>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 3 &middot; WHY LATIN STILL MATTERS <span class="pill-time">8 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">A &ldquo;dead&rdquo; language that never stopped working</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">People call Latin &ldquo;dead&rdquo; because no country speaks it as a native tongue anymore. But it is doing more work today than most living languages:</p>
+        <ul style="font-size:17px;color:#1a2340;line-height:1.7;margin:0 0 10px;padding-left:22px;">
+            <li><strong>Medicine</strong> &mdash; the body's parts and most diagnoses carry Latin names: <span class="lat">femur, cranium, vertebra</span>.</li>
+            <li><strong>Law</strong> &mdash; courts still argue in Latin phrases: <span class="lat">habeas corpus, pro bono, subpoena</span>.</li>
+            <li><strong>Science</strong> &mdash; every plant and animal has a two-part Latin name: <em>Homo sapiens, Canis lupus</em>.</li>
+            <li><strong>Language</strong> &mdash; and, most of all, Latin never truly died. It turned into new languages.</li>
+        </ul>
+        <div class="etym-box">
+            <div class="lbl">&#127793; THE MOTHER OF THE ROMANCE LANGUAGES</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 8px;">As spoken Latin spread and drifted, it slowly became five national languages &mdash; the <strong>Romance</strong> languages (from <span class="lat">R&#333;m&#257;nicus</span>, &ldquo;in the Roman manner&rdquo;): <strong>Spanish, French, Italian, Portuguese,</strong> and <strong>Romanian</strong>. Watch one Latin word become all five:</p>
+            <table class="gtable" style="margin:0;">
+                <thead><tr><th>Latin</th><th>Its descendants</th></tr></thead>
+                <tbody>
+                    <tr><td class="v">aqua (water)</td><td>Spanish <em>agua</em> &middot; Italian <em>acqua</em> &middot; French <em>eau</em> &middot; Portuguese <em>&aacute;gua</em></td></tr>
+                </tbody>
+            </table>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:8px 0 0;">English isn't a Romance language, but it borrowed enormously from Latin &mdash; some words <strong>directly</strong> (<em>video, agenda, exit</em>) and thousands more <strong>through French</strong> after the Norman Conquest of 1066 (<em>royal, justice, city</em>). Well over half of English vocabulary traces back to Latin.</p>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 4 &middot; MIXED PRACTICE <span class="pill-time">14 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five mixed reps drawing on the whole week &mdash; alphabet, vowels, consonants, stress, and culture in one place. Then read three names of your own. Wrong answers give a hint; use Reset to try again.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the alphabet</div>
+            <div class="widget-question">How many letters were in the classical Latin alphabet?</div>
+            <div class="widget-options">
+                <button data-correct="false">21</button>
+                <button data-correct="false">26</button>
+                <button data-correct="true">23</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; vowel length</div>
+            <div class="widget-question">In <span class="lat">&#256;frica</span>, the macron over the first <span class="lat">&#256;</span> marks it as:</div>
+            <div class="widget-options">
+                <button data-correct="false">the stressed syllable</button>
+                <button data-correct="true">a long vowel</button>
+                <button data-correct="false">a silent letter</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; consonants</div>
+            <div class="widget-question">In <span class="lat">Caesar</span>, the letter <span class="lat">c</span> sounds like:</div>
+            <div class="widget-options">
+                <button data-correct="true">&ldquo;k&rdquo;</button>
+                <button data-correct="false">&ldquo;s&rdquo;</button>
+                <button data-correct="false">&ldquo;ch&rdquo;</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the family tree</div>
+            <div class="widget-question">Spanish, French, Italian, Portuguese, and Romanian all descend from:</div>
+            <div class="widget-options">
+                <button data-correct="false">Greek</button>
+                <button data-correct="false">German</button>
+                <button data-correct="true">Latin</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; stress</div>
+            <div class="widget-question">In <span class="lat">&#298;talia</span> (&#298;-ta-li-a), the stress falls on:</div>
+            <div class="widget-options">
+                <button data-correct="false">the first syllable, &#298;</button>
+                <button data-correct="true">the syllable &ldquo;ta&rdquo;</button>
+                <button data-correct="false">the last syllable, a</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Read these three names from the Aeneas story aloud &mdash; <span class="lat">Aen&#275;&#257;s</span>, <span class="lat">D&#299;d&#333;</span>, <span class="lat">R&#333;ma</span>. Mark the stressed syllable in each and note one tricky sound. Then reveal.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body"><span class="lat">Aen&#275;&#257;s</span> = <strong>ai-N&#274;-&#257;s</strong> &mdash; the <span class="lat">ae</span> is a diphthong (&ldquo;eye&rdquo;); penult <span class="lat">n&#275;</span> is long, so it takes the stress. <span class="lat">D&#299;d&#333;</span> = <strong>D&#298;-d&#333;</strong> &mdash; two syllables, stress the first; both vowels are long. <span class="lat">R&#333;ma</span> = <strong>R&#332;-ma</strong> &mdash; two syllables, stress the first; the <span class="lat">r</span> is trilled.</div>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128173; PART 5 &middot; READY-CHECK <span class="pill-time">3 min</span></div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Be honest with yourself: how ready do you feel to sound out Latin words on the graded work?</div>
+            <div class="widget-options">
+                <button data-response="Great — go straight to the Ludus below and put a strong week to the test. Read every word aloud as you go; your ear is your best tool now.">Solid &mdash; I can read a new word</button>
+                <button data-response="Smart to name it. Spend five minutes replaying Lesson 0.03 (the tricky consonants and diphthongs) and 0.04 (the penult rule), then begin. Those two pages carry most of the pronunciation weight.">A little shaky on the sounds</button>
+                <button data-response="Totally normal on day five. Reread the 0.04 stress table once more and re-run the practice above — reading aloud is doing its job. Then start the graded work when it feels right.">Unsure where the stress goes</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT — graded handoff -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; NOW COMPLETE THE MODULE'S GRADED WORK</div>
+        <div class="nextlist">
+            <div class="row">
+                <div class="n">1</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>Module 00 Ludus</strong> <span class="pts">20 pts</span></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">Timed practice game &mdash; pronunciation rules, alphabet facts, and Roman geography (<span class="lat">&#298;talia, Graecia, Gallia, Hisp&#257;nia, &#256;frica</span>). Three attempts; submit your results as directed.</div></div>
+            </div>
+            <div class="row">
+                <div class="n">2</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>Translation Assignment</strong> <span class="pts">20 pts</span></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">A pronunciation-and-reading task: divide a short set of Roman names into syllables, mark the stress and the tricky sounds, and give the everyday English descendant of each word.</div></div>
+            </div>
+            <div class="row">
+                <div class="n">3</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>Module 00 Quiz</strong> <span class="pts">30 pts</span></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">Alphabet, vowels and macrons, tricky consonants and diphthongs, the penult rule, and a question on the Roman world and why Latin still matters.</div></div>
+            </div>
+            <div class="row" style="margin-bottom:0;">
+                <div class="n">4</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>Module 00 Survey</strong></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">Ungraded &mdash; a quick check on pacing and confidence so we can keep improving the course.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then open the <strong>Module 00 Ludus</strong> to begin the graded work.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; MODULE 00 COMPLETE</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You began the week unable to say a single Latin word with confidence. You end it able to read <em>any</em> of them aloud &mdash; letters, sounds, and stress. Next module: the verb <span class="lat">esse</span> (to be), and your first real Latin sentences about the world of Aeneas. <em>Optim&#275;!</em> &mdash; well done!</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 0.05 &middot; The Roman world &amp; consolidation</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — a confident finish to the module.'
+        : 'Not quite — revisit the week’s pages and try once more.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latin 1 &mdash; Lesson 16.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #2A9D5C; color: #fff; border-color: #2A9D5C; }
+    .widget-options button.incorrect { background: #C0392B; color: #fff; border-color: #C0392B; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .reveal-btn { background: #0E1C42; color:#fff; border:none; border-radius:6px; padding:8px 14px; font-size:14px; cursor:pointer; font-family:inherit; }
+    .reveal-body { display:none; margin-top:10px; background:#fff; border-left:3px solid #2A9D5C; padding:10px 14px; border-radius:4px; font-size:15px; color:#1a2340; }
+    .reveal-body.show { display:block; }
+    .pill-time { display: inline-block; background: #C7922C; color: #fff; font-size: 12px; border-radius: 12px; padding: 2px 10px; margin-left: 8px; vertical-align: middle; }
+    .opt-strip { background: #FDF7E9; border: 1px dashed #C7922C; border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+    .opt-strip .lbl { font-size: 11px; color: #9a7b1e; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .markdone { background: #EAF6EE; border: 1px solid #2A9D5C; border-left: 5px solid #2A9D5C; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+    .markdone .lbl { font-size: 11px; color: #1A6B3D; letter-spacing: 0.4px; margin-bottom: 6px; }
+    .gtable { width:100%; border-collapse:collapse; font-size:15px; margin:12px 0; }
+    .gtable th { background:#0E1C42; color:#fff; text-align:left; padding:8px 12px; font-size:13px; }
+    .gtable td { padding:8px 12px; border-bottom:1px solid #D0D9E8; }
+    .gtable tr:nth-child(even) td { background:#F4F9FC; }
+    .ending { color:#C0392B; font-weight:700; }
+    .lat { font-style:italic; color:#0E1C42; }
+    .parse { font-size:14px; color:#6b7a99; line-height:1.5; margin:2px 0 0; }
+    .sentence { border:1px solid #D0D9E8; border-radius:8px; padding:10px 14px; margin:8px 0; }
+    .sentence .s-lat { font-style:italic; color:#0E1C42; font-size:17px; }
+    .contrast { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    .contrast .col { border:1px solid #D0D9E8; border-radius:8px; padding:14px 16px; }
+    .contrast .col.a { border-top:3px solid #0E1C42; }
+    .contrast .col.b { border-top:3px solid #C7922C; }
+    .contrast h4 { margin:0 0 8px; color:#0E1C42; font-size:16px; }
+    .culture-box { background:#FBF4EE; border:1px solid #E4C9A8; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:18px 0; }
+    .culture-box .lbl { font-size:11px; color:#9a7b1e; letter-spacing:.4px; margin-bottom:8px; }
+    .etym-box { background:#EEF6F1; border:1px solid #BFE0CC; border-left:5px solid #2A9D5C; border-radius:8px; padding:14px 18px; margin:16px 0; }
+    .etym-box .lbl { font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px; }
+    .virtue-box { background:#F1EBF6; border:1px solid #D4C2E4; border-left:5px solid #5A2A82; border-radius:8px; padding:14px 18px; margin:18px 0; }
+    .virtue-box .lbl { font-size:11px; color:#5A2A82; letter-spacing:.4px; margin-bottom:6px; }
+    @media(max-width:640px){ .contrast{grid-template-columns:1fr;} }
+    .roma { display:flex; height:6px; width:100%; border-bottom:1px solid #D0D9E8; }
+    .roma i { display:block; }
+    .roma .p { flex:2; background:#5A2A82; }
+    .roma .g { flex:1; background:#C7922C; }
+    .sol { color:#C79A1E; font-style:normal; }
+    .nextlist .row { display:flex; align-items:flex-start; gap:14px; margin-bottom:16px; }
+    .nextlist .n { min-width:34px; height:34px; border-radius:50%; background:#0E1C42; color:#fff; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .nextlist .pts { display:inline-block; background:#5A2A82; color:#fff; font-size:12px; border-radius:12px; padding:2px 9px; margin-left:6px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">LATIN 1 <span style="font-size:22px;">&#127963;&#65039;</span></div>
+</div>
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 16</div>
+        <div style="font-size: 12px; color: #666;">Imperative &amp; Vocative</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 16.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Pull it together</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Module Theme</div>
+        <div style="font-size: 16px; color: #0e1c42;">The Art of Roman Rhetoric</div>
+    </div>
+</div>
+
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 16.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><span class="sol">&#9733;</span> Bring It All Together</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; about 38 minutes</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Last day of the module. Today you prove the week stuck &mdash; then you go earn the points.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">No new material. You'll run mixed practice that pulls together the imperative (singular, plural, and the four rebels), the vocative, and negative commands. Then this page hands you off to the module's <strong>graded work</strong>: the Ludus, the Translation Assignment, the Module Quiz, and the short Survey &mdash; and reminds you to keep building your VR Museum rooms.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form imperatives (singular, plural, and the irregulars), build vocatives, and read negative commands in mixed practice without prompts.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> judge whether I'm ready for the module's graded work &mdash; and know exactly what that work is.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9200; PART 1 &middot; THE WEEK IN ONE TABLE <span class="pill-time">5 min</span></div>
+        <h3 style="font-size: 20px; color: #0e1c42; margin: 6px 0 8px 0;">Everything you built this week</h3>
+        <table class="gtable">
+            <thead><tr><th>Day</th><th>What you learned</th></tr></thead>
+            <tbody>
+                <tr><td>16.01</td><td>Commands (imperative mood) and direct address (vocative case) &mdash; recognizing them on sight</td></tr>
+                <tr><td>16.02</td><td>Imperative: singular = present stem; plural = + <span class="lat">-te</span>; four rebels <span class="lat">dīc, dūc, fac, fer</span></td></tr>
+                <tr><td>16.03</td><td>Vocative (<span class="lat">-us</span>&rarr;<span class="lat">-e</span>, <span class="lat">-ius</span>&rarr;<span class="lat">-ī</span>, else = nom.); negative commands with <span class="lat">nōlī / nōlīte</span> + infinitive</td></tr>
+                <tr><td>16.04</td><td>The curator's voice; planning the five Aeneas rooms; <span class="lat">imperāre, vocāre, nōlō</span> in English</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 2 &middot; MIXED PRACTICE <span class="pill-time">20 min</span></div>
+        <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0 0 6px;">Five mixed reps, drawing on the whole week &mdash; forming imperatives and vocatives and building a &ldquo;don't.&rdquo; Then compose a full command of your own.</p>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the rebel singular</div>
+            <div class="widget-question">Order <strong>one person</strong> to lead, using <span class="lat">dūcere</span>. Which form?</div>
+            <div class="widget-options">
+                <button data-correct="true"><span class="lat">dūc</span></button>
+                <button data-correct="false"><span class="lat">dūce</span></button>
+                <button data-correct="false"><span class="lat">dūcite</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; address by name</div>
+            <div class="widget-question">You call out to <span class="lat">Mārcus</span>. Which form?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">Mārcum!</span></button>
+                <button data-correct="true"><span class="lat">Mārce!</span></button>
+                <button data-correct="false"><span class="lat">Mārcus!</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; say &ldquo;don't&rdquo; to a group</div>
+            <div class="widget-question">Tell <strong>a group</strong> &ldquo;do not fight!&rdquo;</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">nōlī pugnāre!</span></button>
+                <button data-correct="false"><span class="lat">nōn pugnāte!</span></button>
+                <button data-correct="true"><span class="lat">nōlīte pugnāre!</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; command a group</div>
+            <div class="widget-question">Tell <strong>a group</strong> of visitors to look, using <span class="lat">spectāre</span>. Which form?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">spectā</span></button>
+                <button data-correct="true"><span class="lat">spectāte</span></button>
+                <button data-correct="false"><span class="lat">spectant</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div class="optima-widget ow-eval">
+            <div class="widget-kicker">&#9989; TRY IT &middot; the <span class="lat">-ius</span> vocative</div>
+            <div class="widget-question">How do you address your son (<span class="lat">fīlius</span>)?</div>
+            <div class="widget-options">
+                <button data-correct="false"><span class="lat">fīlie!</span></button>
+                <button data-correct="false"><span class="lat">fīlius!</span></button>
+                <button data-correct="true"><span class="lat">fīlī!</span></button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="margin-top:16px;">
+            <p style="font-size:16px;color:#1a2340;margin-bottom:8px;">Write your own museum-entrance line: welcome a group of visitors by name, command them (as a group) to enter and look, and tell them not to touch. Then reveal one correct version.</p>
+            <button class="reveal-btn">Reveal answer</button>
+            <div class="reveal-body"><span class="lat">Salvēte, hospitēs! Intrāte et spectāte! Nōlīte tangere!</span> &mdash; &ldquo;Greetings, guests! Enter and look! Do not touch!&rdquo; <span class="lat">Hospitēs</span> (voc. pl. = nom. pl.), plural imperatives <span class="lat">intrāte</span> and <span class="lat">spectāte</span>, and the plural negative command <span class="lat">nōlīte tangere</span>. Speaking to one visitor instead? <span class="lat">Salvē, hospes! Intrā et spectā! Nōlī tangere!</span></div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128173; PART 3 &middot; READY-CHECK <span class="pill-time">3 min</span></div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; no wrong answer</div>
+            <div class="widget-question">Be honest with yourself: how ready do you feel for the graded work?</div>
+            <div class="widget-options">
+                <button data-response="Great — go straight to the Ludus below and put a strong week to the test. Aim to beat your own best time.">Solid &mdash; bring it on</button>
+                <button data-response="Smart to name it. Spend five minutes replaying Lesson 16.02 (forming the command) and re-reading the four rebels dīc, dūc, fac, fer, then start the graded work. You're closer than you think.">A little shaky on the imperative forms</button>
+                <button data-response="Totally normal. Reread the vocative rule in 16.03 (-us→-e, -ius→-ī, else = nominative) and the nōlī pattern once more, then begin the graded work when it feels right.">Fuzzy on vocatives or &ldquo;don't&rdquo;</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT — graded handoff -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; NOW COMPLETE THE MODULE'S GRADED WORK</div>
+        <div class="nextlist">
+            <div class="row">
+                <div class="n">1</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>Module 16 Ludus</strong> <span class="pts">20 pts</span></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">Timed practice game &mdash; imperative forms (all three conjugations + the four rebels), vocative case, negative commands, and museum/description vocabulary. Three attempts; submit your results as directed.</div></div>
+            </div>
+            <div class="row">
+                <div class="n">2</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>Translation Assignment</strong> <span class="pts">20 pts</span></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">Translate a short set of commands and direct-address sentences using this module's grammar and vocabulary from M00&ndash;M16.</div></div>
+            </div>
+            <div class="row">
+                <div class="n">3</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>Module 16 Quiz</strong> <span class="pts">30 pts</span></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">Forming imperatives and vocatives, building negative commands, and reading the curator's voice.</div></div>
+            </div>
+            <div class="row" style="margin-bottom:0;">
+                <div class="n">4</div>
+                <div><div style="font-size:18px;color:#0e1c42;margin-bottom:4px;"><strong>Module 16 Survey</strong></div><div style="font-size:16px;color:#1a2340;line-height:1.55;">Ungraded &mdash; a quick check on pacing and confidence so we can keep improving the course.</div></div>
+            </div>
+        </div>
+        <div style="background:#FBF4EE;border:1px solid #E4C9A8;border-left:5px solid #C7922C;border-radius:8px;padding:12px 16px;margin-top:6px;">
+            <div style="font-size:11px;color:#9a7b1e;letter-spacing:.4px;margin-bottom:6px;">&#127963;&#65039; VR MUSEUM &middot; WORK IN PROGRESS</div>
+            <p style="font-size:16px;color:#1a2340;line-height:1.6;margin:0;">Keep building your five Aeneas rooms in VR. Add titles, descriptions, and Latin captions using this week's imperatives and vocatives. The finished museum is submitted at the <strong>S1 Final (Module 17)</strong> &mdash; you are not turning it in yet.</p>
+        </div>
+    </div>
+
+    <div class="markdone">
+        <div class="lbl">&#9989; BEFORE YOU LEAVE</div>
+        <div style="font-size: 17px; color: #1a2340; line-height: 1.6;">Click <strong>&ldquo;Mark as Done&rdquo;</strong> on this page in Canvas. Then open the <strong>Module 16 Ludus</strong> to begin the graded work.</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; MODULE 16 COMPLETE</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You began the week only able to <em>report</em>. You're ending it able to <em>call</em> a person and <em>command</em> them &mdash; the voice of every orator and every guide. Next module: <strong>Review &amp; the VR Museum</strong> &mdash; the semester capstone. <em>Optimē!</em> &mdash; well done!</p>
+    </div>
+
+</div>
+
+<div class="roma" aria-hidden="true"><i class="p"></i><i class="g"></i><i class="p"></i></div>
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; LATIN 1 &#127963;&#65039; &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 16.05 &middot; Pull it together</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected','correct','incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      return;
+    }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var eBtn = e.target.closest('.ow-eval .widget-options button');
+    if (eBtn) {
+      var ew = eBtn.closest('.optima-widget');
+      var correct = eBtn.dataset.correct === 'true';
+      eBtn.classList.add(correct ? 'correct' : 'incorrect');
+      var efb = ew.querySelector('.widget-feedback');
+      efb.textContent = correct
+        ? 'Correct — that’s a confident finish to the week.'
+        : 'Not quite — revisit the imperative or vocative rules and try once more.';
+      efb.classList.add('show');
+      return;
+    }
+    var rev = e.target.closest('.reveal-btn');
+    if (rev) {
+      var body = rev.parentElement.querySelector('.reveal-body');
+      if (body) body.classList.toggle('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
