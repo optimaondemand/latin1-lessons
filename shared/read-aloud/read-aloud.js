@@ -294,6 +294,45 @@
         return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
     }
 
+    // ---- recorded audio wins -------------------------------------------------
+    // A vocabulary card that ships its own <audio> clip must not ALSO be spoken
+    // by TTS: at best the student hears the word twice in two voices, and at
+    // worst TTS contradicts the recording. On the Spanish r/rr contrast page
+    // OneCore es-MX cannot trill, so TTS renders `pero` and `perro` identically
+    // and teaches the wrong thing over the top of the human recordings.
+    //
+    // SKIP_SEL already drops the <audio> element itself, but the word and gloss
+    // are SIBLINGS of it inside the card, so they survive. Hence this check.
+    //
+    // DIRECT child only, deliberately. Testing "contains an <audio> descendant"
+    // would match the grid, the section, .canvas-frame and <body> alike and
+    // silence the whole page. The card is the shallowest element that owns an
+    // <audio> outright, which is why this finds the card and nothing above it.
+    // Working from the DOM rather than the markup also makes it independent of
+    // layout: the fleet writes these cards three different ways (all on one
+    // line, <audio> on its own line inside a multi-line div, and inside an
+    // <li>), and all three have the card as the audio's parent.
+    //
+    // French is intentionally NOT covered: it has no <audio> at all, playing its
+    // 604 clips through <button class="say" data-audio>. Those buttons were
+    // generated with the same Microsoft voices the player speaks with, so there
+    // is no recording for TTS to contradict, and the letter/word sits OUTSIDE
+    // the button as a sibling. Matching data-audio buttons here would silence
+    // French vocabulary grids too — a change beyond what was asked for.
+    function ownsRecordedAudio(el) {
+        for (var c = el.firstElementChild; c; c = c.nextElementSibling) {
+            if (c.tagName === "AUDIO") { return true; }
+        }
+        return false;
+    }
+
+    function inRecordedAudioItem(el) {
+        for (var n = el; n && n !== root; n = n.parentElement) {
+            if (ownsRecordedAudio(n)) { return true; }
+        }
+        return false;
+    }
+
     // Build the queue as language-runs. Each text node is a segment carrying its
     // own language decision; adjacent segments agreeing on language merge back
     // together so the audio does not fragment unnecessarily.
@@ -304,6 +343,7 @@
             if (!/\S/.test(node.textContent)) { continue; }
             var el = node.parentElement;
             if (!el || el.closest(SKIP_SEL)) { continue; }
+            if (inRecordedAudioItem(el)) { continue; }
             if (!isVisible(el)) { continue; }
             var block = el.closest(BLOCK_PRIMARY) || el.closest(BLOCK_FALLBACK) || root;
             var text = node.textContent.replace(/\s+/g, " ");
